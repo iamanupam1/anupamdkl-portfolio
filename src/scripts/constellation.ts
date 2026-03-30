@@ -27,7 +27,7 @@ export function initConstellation(canvasId: string): void {
     height = rect.height;
     canvas!.width = width * dpr;
     canvas!.height = height * dpr;
-    ctx!.scale(dpr, dpr);
+    ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
     generateDots();
   }
 
@@ -92,10 +92,25 @@ export function initConstellation(canvasId: string): void {
       ctx!.fill();
     }
 
-    requestAnimationFrame(draw);
+    if (isVisible) {
+      requestAnimationFrame(draw);
+    }
   }
+
+  // Only animate when canvas is visible
+  let isVisible = false;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const wasVisible = isVisible;
+      isVisible = entries[0].isIntersecting;
+      if (isVisible && !wasVisible) {
+        requestAnimationFrame(draw);
+      }
+    },
+    { threshold: 0 }
+  );
 
   window.addEventListener('resize', resize);
   resize();
-  requestAnimationFrame(draw);
+  observer.observe(canvas);
 }

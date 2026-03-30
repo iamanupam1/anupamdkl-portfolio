@@ -29,20 +29,28 @@ function populateOverlay(project: Project): void {
   if (description) description.textContent = project.description;
 
   if (tech) {
-    tech.innerHTML = project.techStack
-      .map((t) => `<span class="tech-tag">${t}</span>`)
-      .join('');
+    tech.replaceChildren();
+    for (const t of project.techStack) {
+      const span = document.createElement('span');
+      span.className = 'tech-tag';
+      span.textContent = t;
+      tech.appendChild(span);
+    }
   }
 
   if (links) {
-    let html = '';
-    if (project.liveUrl) {
-      html += `<a href="${project.liveUrl}" class="overlay-link" target="_blank" rel="noopener">Live Demo ↗</a>`;
-    }
-    if (project.githubUrl) {
-      html += `<a href="${project.githubUrl}" class="overlay-link" target="_blank" rel="noopener">GitHub ↗</a>`;
-    }
-    links.innerHTML = html;
+    links.replaceChildren();
+    const makeLink = (url: string, label: string) => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.className = 'overlay-link';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = `${label} ↗`;
+      links.appendChild(a);
+    };
+    if (project.liveUrl) makeLink(project.liveUrl, 'Live Demo');
+    if (project.githubUrl) makeLink(project.githubUrl, 'GitHub');
   }
 }
 

@@ -30,13 +30,11 @@ import Contact from '../components/Contact.astro';
   import { initOverlay } from '../scripts/overlay';
   import { initConstellation } from '../scripts/constellation';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    initNavScroll();
-    initHeroAnimations();
-    initProjectsAnimations();
-    initAboutAnimations();
-    initContactAnimations();
-    initOverlay();
-    initConstellation('constellation-canvas');
-  });
+  initNavScroll();
+  initHeroAnimations();
+  initProjectsAnimations();
+  initAboutAnimations();
+  initContactAnimations();
+  initOverlay();
+  initConstellation('constellation-canvas');
 </script>

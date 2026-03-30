@@ -26,7 +26,7 @@ export function initHeroAnimations(): void {
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
   tl.to('.hero-gradient', { opacity: 1, duration: 0.5 })
-    .to('.hero-label', { opacity: 1, y: 0, duration: 0.6 }, '-=0.1')
+    .fromTo('.hero-label', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.1')
     .fromTo(
       '.hero-word',
       { opacity: 0, y: 30 },
@@ -37,11 +37,19 @@ export function initHeroAnimations(): void {
     .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
     .fromTo(
       '.nav-logo, .nav-link',
-      { opacity: 0, y: -10 },
-      { opacity: 1, y: 0, duration: 0.4, stagger: 0.08 },
+      { opacity: 0, x: 10 },
+      { opacity: 1, x: 0, duration: 0.4, stagger: 0.08 },
       '-=0.4'
     )
     .to('.scroll-indicator', { opacity: 1, duration: 0.4 }, '-=0.2');
+
+  // Accent word gradient shimmer
+  gsap.to('.hero-accent', {
+    backgroundPosition: '200% center',
+    duration: 3,
+    repeat: -1,
+    ease: 'linear',
+  });
 
   // Scroll indicator pulse
   gsap.to('.scroll-dot', {
