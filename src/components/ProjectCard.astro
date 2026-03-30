@@ -1,0 +1,80 @@
+---
+interface Props {
+  id: string;
+  tag: string;
+  title: string;
+  summary: string;
+  gradient: string;
+}
+
+const { id, tag, title, summary, gradient } = Astro.props;
+---
+
+<div class="project-card" data-project-id={id}>
+  <div class="project-image" style={`background: ${gradient}`}>
+    <span class="project-image-label">{title}</span>
+  </div>
+  <div class="project-body">
+    <span class="project-tag">{tag}</span>
+    <h3 class="project-title">{title}</h3>
+    <p class="project-summary">{summary}</p>
+  </div>
+</div>
+
+<style>
+  .project-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s var(--ease-cinematic);
+  }
+
+  .project-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(129, 140, 248, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-image-label {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .project-body {
+    padding: 24px;
+  }
+
+  .project-tag {
+    display: inline-block;
+    color: var(--accent-start);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .project-summary {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+</style>

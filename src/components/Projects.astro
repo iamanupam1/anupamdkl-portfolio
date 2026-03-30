@@ -1,0 +1,63 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/projects';
+---
+
+<section class="projects-section" id="work">
+  <div class="projects-header">
+    <span class="section-label">Selected Work</span>
+    <h2 class="section-title">Things I've built</h2>
+  </div>
+  <div class="projects-grid">
+    {projects.map((project) => (
+      <ProjectCard
+        id={project.id}
+        tag={project.tag}
+        title={project.title}
+        summary={project.summary}
+        gradient={project.gradient}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    padding: var(--section-padding);
+    position: relative;
+  }
+
+  .projects-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    display: block;
+    color: var(--accent-start);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 300;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .projects-section {
+      padding: var(--section-padding-mobile);
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
