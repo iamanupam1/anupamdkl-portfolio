@@ -1,0 +1,109 @@
+---
+import Constellation from './Constellation.astro';
+---
+
+<section class="about-section" id="about">
+  <div class="about-header">
+    <span class="section-label">About</span>
+    <h2 class="section-title">A bit about me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="about-paragraph">
+        I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.
+      </p>
+      <p class="about-paragraph">
+        When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with creative coding.
+      </p>
+      <a href="/resume.pdf" download class="resume-button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2v9m0 0L5 8m3 3l3-3M3 13h10" />
+        </svg>
+        Download Resume
+      </a>
+    </div>
+    <div class="about-visual">
+      <Constellation />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding: var(--section-padding);
+    position: relative;
+  }
+
+  .about-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    display: block;
+    color: var(--accent-start);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 300;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .about-paragraph {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    opacity: 0;
+  }
+
+  .resume-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px 24px;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 8px;
+    color: var(--accent-start);
+    font-size: 14px;
+    transition: all 0.3s var(--ease-cinematic);
+    opacity: 0;
+  }
+
+  .resume-button:hover {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+    color: var(--text-primary);
+  }
+
+  .about-visual {
+    height: 400px;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      padding: var(--section-padding-mobile);
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .about-visual {
+      height: 250px;
+    }
+  }
+</style>
