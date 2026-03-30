@@ -10,3 +10,12 @@ import Hero from '../components/Hero.astro';
     <Hero />
   </main>
 </Layout>
+
+<script>
+  import { initHeroAnimations, initNavScroll } from '../scripts/animations';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initNavScroll();
+    initHeroAnimations();
+  });
+</script>
