@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Mood B — Minimal & Elegant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500&family=DM+Serif+Display&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #fafaf9;
+    color: #1c1917;
+    overflow-x: hidden;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 64px;
+  }
+  .logo {
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #1c1917;
+  }
+  .nav-links { display: flex; gap: 40px; }
+  .nav-links a {
+    color: #a8a29e;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #1c1917;
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: #1c1917; }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 0 64px;
+    position: relative;
+  }
+  .hero-content { max-width: 600px; }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 400;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    animation: revealUp 1s ease both;
+  }
+  .hero-divider {
+    width: 32px;
+    height: 1px;
+    background: #d6d3d1;
+    margin-bottom: 20px;
+    animation: revealUp 1s ease 0.3s both;
+  }
+  .hero-subtitle {
+    color: #a8a29e;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    animation: revealUp 1s ease 0.5s both;
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Geometric accents */
+  .hero-geo {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .circle {
+    border: 1px solid #e7e5e4;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+  .circle:nth-child(1) { width: 300px; height: 300px; }
+  .circle:nth-child(2) { width: 220px; height: 220px; animation-delay: 1s; }
+  .circle:nth-child(3) { width: 140px; height: 140px; animation-delay: 2s; }
+  .circle-dot {
+    width: 6px; height: 6px;
+    background: #d6d3d1;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    right: 64px;
+    color: #d6d3d1;
+    font-size: 11px;
+    letter-spacing: 1px;
+    animation: fadeIn 1s ease 1s both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Section */
+  .section {
+    padding: 120px 64px;
+  }
+  .section-label {
+    color: #a8a29e;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 64px;
+  }
+
+  /* Projects */
+  .project-list { display: flex; flex-direction: column; gap: 1px; }
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    gap: 40px;
+    align-items: center;
+    padding: 40px 0;
+    border-bottom: 1px solid #e7e5e4;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .project-item:first-child { border-top: 1px solid #e7e5e4; }
+  .project-item:hover { padding-left: 16px; }
+  .project-item:hover .project-name { color: #78716c; }
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    transition: color 0.3s;
+  }
+  .project-desc {
+    color: #a8a29e;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .project-year {
+    color: #d6d3d1;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .about-text {
+    color: #57534e;
+    font-size: 16px;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .detail-group {}
+  .detail-label {
+    color: #a8a29e;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 15px;
+    color: #44403c;
+  }
+
+  /* Footer */
+  footer {
+    padding: 48px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e7e5e4;
+  }
+  footer span { color: #a8a29e; font-size: 12px; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="logo">anupam</div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Software<br>Engineer</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle">Full-Stack &middot; Builder &middot; Creator</p>
+    </div>
+    <div class="hero-geo">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle-dot"></div>
+    </div>
+    <div class="scroll-hint">scroll &darr;</div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="project-list">
+      <div class="project-item">
+        <div class="project-name">Project Alpha</div>
+        <div class="project-desc">A real-time collaboration platform built with React and WebSockets for seamless team workflows.</div>
+        <div class="project-year">2024</div>
+      </div>
+      <div class="project-item">
+        <div class="project-name">DataFlow</div>
+        <div class="project-desc">High-performance data pipeline processing millions of events with elegant simplicity.</div>
+        <div class="project-year">2023</div>
+      </div>
+      <div class="project-item">
+        <div class="project-name">DevKit CLI</div>
+        <div class="project-desc">Developer toolkit that automates common workflows with a focus on developer experience.</div>
+        <div class="project-year">2023</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Background</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I believe great software is invisible — it gets out of the way and lets people do what they need to do. My work focuses on building systems that are both technically sound and genuinely pleasant to use.</p>
+        <br>
+        <p>Every line of code is an opportunity to make something better. I take that seriously.</p>
+      </div>
+      <div class="about-details">
+        <div class="detail-group">
+          <div class="detail-label">Experience</div>
+          <div class="detail-value">5+ years building for the web</div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Focus</div>
+          <div class="detail-value">React, Node.js, Python, Cloud Infrastructure</div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Currently</div>
+          <div class="detail-value">Open to interesting opportunities</div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">Working remotely</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Anupam</span>
+    <span>Designed with care</span>
+  </footer>
+</body>
+</html>

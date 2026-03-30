@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Mood A — Dark & Cinematic</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0f;
+    color: #f1f5f9;
+    overflow-x: hidden;
+  }
+
+  /* Animated gradient background */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(99,102,241,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(168,85,247,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.08) 0%, transparent 40%);
+    animation: gradientShift 8s ease-in-out infinite alternate;
+  }
+  @keyframes gradientShift {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  /* Floating particles */
+  .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: #818cf8;
+    box-shadow: 0 0 8px currentColor;
+    animation: float linear infinite;
+  }
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  /* Nav */
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #e2e8f0;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #e2e8f0; }
+
+  /* Hero content */
+  .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    padding: 0 24px;
+  }
+  .hero-label {
+    color: #94a3b8;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .hero-title {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 200;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+  .hero-title span {
+    font-weight: 600;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradientText 4s ease infinite;
+  }
+  @keyframes gradientText {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #6366f1, transparent);
+    margin-bottom: 24px;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+  .hero-subtitle {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: bounce 2s ease infinite;
+  }
+  .scroll-indicator div {
+    width: 24px; height: 40px;
+    border: 2px solid rgba(148,163,184,0.3);
+    border-radius: 12px;
+    position: relative;
+  }
+  .scroll-indicator div::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 8px;
+    background: #818cf8;
+    border-radius: 2px;
+    animation: scrollDot 2s ease infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  @keyframes scrollDot { 0% { opacity: 1; top: 6px; } 100% { opacity: 0; top: 20px; } }
+
+  /* Sections */
+  .section {
+    padding: 120px 48px;
+    position: relative;
+  }
+  .section-label {
+    color: #6366f1;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+
+  /* Project cards */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .project-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(99,102,241,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .project-tag {
+    display: inline-block;
+    color: #818cf8;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .project-card h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .project-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .project-image {
+    height: 180px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1));
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* About section */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .about-text { color: #94a3b8; font-size: 16px; line-height: 1.8; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .stat {
+    padding: 24px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+  .stat-number { font-size: 32px; font-weight: 200; color: #818cf8; }
+  .stat-label { color: #64748b; font-size: 12px; letter-spacing: 1px; margin-top: 4px; }
+
+  /* Footer */
+  footer {
+    padding: 48px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    color: #475569;
+    font-size: 13px;
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+
+  <section class="hero">
+    <div class="particles" id="particles"></div>
+    <nav>
+      <div class="logo">ANUPAM</div>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <div class="hero-label">Full-Stack Engineer</div>
+      <h1 class="hero-title">Building digital<br><span>experiences</span></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle">Crafting code that feels alive</p>
+    </div>
+    <div class="scroll-indicator"><div></div></div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image">PROJECT PREVIEW</div>
+        <div class="project-tag">Web App</div>
+        <h3>Project Alpha</h3>
+        <p>A real-time collaboration platform built with React and WebSockets for seamless team workflows.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-image">PROJECT PREVIEW</div>
+        <div class="project-tag">API Platform</div>
+        <h3>DataFlow Engine</h3>
+        <p>High-performance data pipeline processing millions of events per second with sub-millisecond latency.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-image">PROJECT PREVIEW</div>
+        <div class="project-tag">Open Source</div>
+        <h3>DevKit CLI</h3>
+        <p>Developer toolkit that automates common workflows, used by thousands of developers worldwide.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">A bit about me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.</p>
+        <br>
+        <p>When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with creative coding.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-number">5+</div><div class="stat-label">Years Experience</div></div>
+        <div class="stat"><div class="stat-number">30+</div><div class="stat-label">Projects Shipped</div></div>
+        <div class="stat"><div class="stat-number">10+</div><div class="stat-label">Technologies</div></div>
+        <div class="stat"><div class="stat-number">∞</div><div class="stat-label">Curiosity</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed with intention. Built with care.</p>
+  </footer>
+
+  <script>
+    // Generate floating particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 4 + 1;
+      const colors = ['#818cf8', '#a78bfa', '#c084fc', '#6366f1'];
+      p.style.cssText = `
+        width:${size}px;height:${size}px;
+        left:${Math.random()*100}%;
+        color:${colors[Math.floor(Math.random()*colors.length)]};
+        background:currentColor;
+        animation-duration:${Math.random()*10+8}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      container.appendChild(p);
+    }
+  </script>
+</body>
+</html>
