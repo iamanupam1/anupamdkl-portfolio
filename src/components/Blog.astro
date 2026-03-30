@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<section class="blog-section" id="blog">
+  <div class="blog-header">
+    <span class="section-label">Blog</span>
+    <h2 class="section-title">Thoughts & explorations</h2>
+  </div>
+  <div class="blog-grid">
+    {posts.map((post) => (
+      <BlogCard
+        slug={post.slug}
+        title={post.data.title}
+        summary={post.data.summary}
+        date={post.data.date}
+        tags={post.data.tags}
+        gradient={post.data.gradient}
+      />
+    ))}
+  </div>
+  <div class="blog-footer">
+    <a href="/blog" class="blog-view-all">
+      View all posts
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h10m0 0L9 4m4 4L9 12" />
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .blog-section {
+    padding: var(--section-padding);
+    position: relative;
+  }
+
+  .blog-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    display: block;
+    color: var(--accent-start);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 300;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .blog-footer {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .blog-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 8px;
+    color: var(--accent-start);
+    font-size: 14px;
+    transition: all 0.3s var(--ease-cinematic);
+  }
+
+  .blog-view-all:hover {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-section {
+      padding: var(--section-padding-mobile);
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

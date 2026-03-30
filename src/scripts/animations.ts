@@ -134,6 +134,29 @@ export function initProjectsAnimations(): void {
   );
 }
 
+export function initBlogAnimations(): void {
+  if (prefersReducedMotion()) {
+    gsap.set('.blog-card', { opacity: 1, y: 0 });
+    return;
+  }
+
+  gsap.fromTo(
+    '.blog-card',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.blog-grid',
+        start: 'top bottom-=100',
+      },
+    }
+  );
+}
+
 export function initAboutAnimations(): void {
   if (prefersReducedMotion()) {
     gsap.set('.about-paragraph, .resume-button', { opacity: 1, y: 0 });

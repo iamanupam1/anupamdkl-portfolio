@@ -1,0 +1,286 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  tags: string[];
+  gradient: string;
+}
+
+const { title, date, tags, gradient } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(date);
+---
+
+<Layout title={`${title} — Anupam`}>
+  <nav class="blog-nav">
+    <a href="/" class="blog-nav-logo">ANUPAM</a>
+    <div class="blog-nav-links">
+      <a href="/#work" class="blog-nav-link">Work</a>
+      <a href="/#blog" class="blog-nav-link">Blog</a>
+      <a href="/#about" class="blog-nav-link">About</a>
+      <a href="/#contact" class="blog-nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-post-header" style={`background: ${gradient}`}>
+      <div class="blog-post-header-content">
+        <a href="/blog" class="blog-post-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
+          </svg>
+          All posts
+        </a>
+        <div class="blog-post-tags">
+          {tags.map((tag) => (
+            <span class="blog-post-tag">{tag}</span>
+          ))}
+        </div>
+        <h1 class="blog-post-title">{title}</h1>
+        <time class="blog-post-date" datetime={date.toISOString()}>{formattedDate}</time>
+      </div>
+    </header>
+
+    <div class="blog-post-body">
+      <slot />
+    </div>
+  </article>
+
+  <footer class="blog-post-footer">
+    <a href="/blog" class="blog-post-footer-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
+      </svg>
+      Back to all posts
+    </a>
+  </footer>
+</Layout>
+
+<style>
+  .blog-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .blog-nav-logo {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+  }
+
+  .blog-nav-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .blog-nav-link {
+    color: var(--text-muted);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+
+  .blog-nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .blog-post {
+    padding-top: 72px;
+  }
+
+  .blog-post-header {
+    padding: 80px 48px 60px;
+    position: relative;
+  }
+
+  .blog-post-header-content {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .blog-post-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+
+  .blog-post-back:hover {
+    color: var(--text-primary);
+  }
+
+  .blog-post-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .blog-post-tag {
+    color: var(--accent-start);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .blog-post-title {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .blog-post-date {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .blog-post-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 48px 80px;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .blog-post-body :global(h2) {
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 400;
+    margin: 48px 0 16px;
+  }
+
+  .blog-post-body :global(h3) {
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 400;
+    margin: 36px 0 12px;
+  }
+
+  .blog-post-body :global(p) {
+    margin-bottom: 20px;
+  }
+
+  .blog-post-body :global(a) {
+    color: var(--accent-start);
+    transition: color 0.2s;
+  }
+
+  .blog-post-body :global(a:hover) {
+    color: var(--accent-end);
+  }
+
+  .blog-post-body :global(code) {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  .blog-post-body :global(pre) {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .blog-post-body :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .blog-post-body :global(ul),
+  .blog-post-body :global(ol) {
+    margin: 16px 0;
+    padding-left: 24px;
+  }
+
+  .blog-post-body :global(li) {
+    margin-bottom: 8px;
+  }
+
+  .blog-post-body :global(strong) {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .blog-post-body :global(blockquote) {
+    border-left: 2px solid var(--accent-start);
+    padding-left: 20px;
+    margin: 24px 0;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .blog-post-footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  .blog-post-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 14px;
+    transition: all 0.3s var(--ease-cinematic);
+  }
+
+  .blog-post-footer-link:hover {
+    border-color: var(--accent-start);
+    color: var(--text-primary);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .blog-nav {
+      padding: 20px 24px;
+    }
+
+    .blog-nav-links {
+      display: none;
+    }
+
+    .blog-post-header {
+      padding: 60px 24px 40px;
+    }
+
+    .blog-post-body {
+      padding: 40px 24px 60px;
+    }
+
+    .blog-post-footer {
+      padding: 0 24px 60px;
+    }
+  }
+</style>
