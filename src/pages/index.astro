@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Projects from '../components/Projects.astro';
+import ProjectOverlay from '../components/ProjectOverlay.astro';
 ---
 
 <Layout title="Anupam — Software Engineer">
@@ -11,13 +12,16 @@ import Projects from '../components/Projects.astro';
     <Hero />
     <Projects />
   </main>
+  <ProjectOverlay />
 </Layout>
 
 <script>
   import { initHeroAnimations, initNavScroll } from '../scripts/animations';
+  import { initOverlay } from '../scripts/overlay';
 
   document.addEventListener('DOMContentLoaded', () => {
     initNavScroll();
     initHeroAnimations();
+    initOverlay();
   });
 </script>
