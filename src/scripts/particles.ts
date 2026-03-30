@@ -2,7 +2,7 @@ export function createParticles(containerId: string, count: number): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const colors = ['#818cf8', '#a78bfa', '#c084fc', '#6366f1'];
+  const colors = ['#7c6aef', '#a78bfa', '#e879a8', '#5b4fc7'];
 
   for (let i = 0; i < count; i++) {
     const particle = document.createElement('div');

@@ -30,33 +30,38 @@ import { projects } from '../data/projects';
   }
 
   .projects-header {
-    margin-bottom: 48px;
+    margin-bottom: 56px;
   }
 
   .section-label {
     display: block;
+    font-family: var(--font-body);
     color: var(--accent-start);
     font-size: 11px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    font-weight: 400;
   }
 
   .section-title {
-    font-size: 36px;
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
   }
 
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-    justify-items: center;
   }
 
+  /* Center orphan card */
   .projects-grid > :global(:last-child:nth-child(odd)) {
     grid-column: 1 / -1;
     max-width: calc(50% - 12px);
+    justify-self: center;
   }
 
   @media (max-width: 768px) {
@@ -66,6 +71,10 @@ import { projects } from '../data/projects';
 
     .projects-grid {
       grid-template-columns: 1fr;
+    }
+
+    .projects-grid > :global(:last-child:nth-child(odd)) {
+      max-width: 100%;
     }
   }
 </style>

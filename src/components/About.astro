@@ -3,12 +3,17 @@ import Constellation from './Constellation.astro';
 ---
 
 <section class="about-section" id="about">
-  <div class="about-header">
-    <span class="section-label">About</span>
-    <h2 class="section-title">A bit about me</h2>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
+  <div class="about-layout">
+    <div class="about-visual-col">
+      <div class="about-accent-number">03</div>
+      <div class="about-visual">
+        <Constellation />
+      </div>
+    </div>
+    <div class="about-text-col">
+      <span class="section-label">About</span>
+      <h2 class="section-title">A bit<br />about me</h2>
+      <div class="about-divider"></div>
       <p class="about-paragraph">
         I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.
       </p>
@@ -22,9 +27,6 @@ import Constellation from './Constellation.astro';
         Download Resume
       </a>
     </div>
-    <div class="about-visual">
-      <Constellation />
-    </div>
   </div>
 </section>
 
@@ -36,62 +38,100 @@ import Constellation from './Constellation.astro';
     margin: 0 auto;
   }
 
-  .about-header {
-    margin-bottom: 48px;
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-visual-col {
+    position: relative;
+  }
+
+  .about-accent-number {
+    font-family: var(--font-display);
+    font-size: clamp(120px, 15vw, 200px);
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(124, 106, 239, 0.08);
+    position: absolute;
+    top: -60px;
+    left: -20px;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+
+  .about-visual {
+    height: 420px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-text-col {
+    position: relative;
   }
 
   .section-label {
     display: block;
+    font-family: var(--font-body);
     color: var(--accent-start);
     font-size: 11px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    font-weight: 400;
   }
 
   .section-title {
-    font-size: 36px;
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
   }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
+  .about-divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+    margin: 28px 0;
+    border-radius: 1px;
   }
 
   .about-paragraph {
     color: var(--text-muted);
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.8;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     opacity: 0;
+    font-weight: 300;
   }
 
   .resume-button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 16px;
     padding: 12px 24px;
-    border: 1px solid rgba(129, 140, 248, 0.3);
+    border: 1px solid rgba(124, 106, 239, 0.25);
     border-radius: 8px;
     color: var(--accent-start);
-    font-size: 14px;
-    transition: all 0.3s var(--ease-cinematic);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.4s var(--ease-cinematic);
     opacity: 0;
   }
 
   .resume-button:hover {
     border-color: var(--accent-start);
-    box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+    box-shadow: 0 0 24px rgba(124, 106, 239, 0.15);
     color: var(--text-primary);
-  }
-
-  .about-visual {
-    height: 400px;
-    position: relative;
+    transform: translateY(-1px);
   }
 
   @media (max-width: 768px) {
@@ -99,13 +139,25 @@ import Constellation from './Constellation.astro';
       padding: var(--section-padding-mobile);
     }
 
-    .about-grid {
+    .about-layout {
       grid-template-columns: 1fr;
       gap: 40px;
     }
 
+    .about-visual-col {
+      order: 2;
+    }
+
+    .about-text-col {
+      order: 1;
+    }
+
     .about-visual {
       height: 250px;
+    }
+
+    .about-accent-number {
+      display: none;
     }
   }
 </style>

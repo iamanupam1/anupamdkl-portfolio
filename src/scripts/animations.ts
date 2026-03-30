@@ -45,20 +45,13 @@ export function initHeroAnimations(): void {
 
   // Accent word gradient shimmer
   gsap.to('.hero-accent', {
-    backgroundPosition: '200% center',
-    duration: 3,
+    backgroundPosition: '200% 200%',
+    duration: 4,
     repeat: -1,
     ease: 'linear',
   });
 
-  // Scroll indicator pulse
-  gsap.to('.scroll-dot', {
-    y: 14,
-    opacity: 0,
-    duration: 1.5,
-    repeat: -1,
-    ease: 'power2.in',
-  });
+  // Scroll indicator is CSS-animated (scroll-line), no GSAP needed
 
   // Hero parallax on scroll
   gsap.to('.hero-content', {
