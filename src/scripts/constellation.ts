@@ -60,7 +60,7 @@ export function initConstellation(canvasId: string): void {
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < connectionDistance) {
           const alpha = (1 - dist / connectionDistance) * 0.15;
-          ctx!.strokeStyle = `rgba(129, 140, 248, ${alpha})`;
+          ctx!.strokeStyle = `rgba(124, 106, 239, ${alpha})`;
           ctx!.lineWidth = 0.5;
           ctx!.beginPath();
           ctx!.moveTo(dots[i].x, dots[i].y);
@@ -80,13 +80,13 @@ export function initConstellation(canvasId: string): void {
       dot.x = dot.baseX + Math.sin(time * 0.001 + dot.pulseOffset) * 3;
       dot.y = dot.baseY + Math.cos(time * 0.001 + dot.pulseOffset) * 3;
 
-      ctx!.fillStyle = `rgba(129, 140, 248, ${alpha})`;
+      ctx!.fillStyle = `rgba(124, 106, 239, ${alpha})`;
       ctx!.beginPath();
       ctx!.arc(dot.x, dot.y, currentRadius, 0, Math.PI * 2);
       ctx!.fill();
 
       // Glow
-      ctx!.fillStyle = `rgba(129, 140, 248, ${alpha * 0.3})`;
+      ctx!.fillStyle = `rgba(124, 106, 239, ${alpha * 0.3})`;
       ctx!.beginPath();
       ctx!.arc(dot.x, dot.y, currentRadius * 3, 0, Math.PI * 2);
       ctx!.fill();

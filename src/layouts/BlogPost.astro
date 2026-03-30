@@ -91,15 +91,17 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     justify-content: space-between;
     align-items: center;
     padding: 24px 48px;
-    background: rgba(10, 10, 15, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(8, 8, 13, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .blog-nav-logo {
+    font-family: var(--font-display);
     font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 2px;
+    font-size: 16px;
+    letter-spacing: 3px;
     color: var(--text-primary);
   }
 
@@ -155,22 +157,28 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .blog-post-tag {
-    color: var(--accent-start);
+    font-family: var(--font-body);
+    color: var(--accent-mid);
     font-size: 10px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
+    font-weight: 400;
   }
 
   .blog-post-title {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 300;
-    line-height: 1.2;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
     margin-bottom: 16px;
+    letter-spacing: -0.5px;
   }
 
   .blog-post-date {
+    font-family: var(--font-body);
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 300;
   }
 
   .blog-post-body {
@@ -183,17 +191,20 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .blog-post-body :global(h2) {
+    font-family: var(--font-display);
     color: var(--text-primary);
     font-size: 24px;
-    font-weight: 400;
-    margin: 48px 0 16px;
+    font-weight: 600;
+    margin: 56px 0 18px;
+    letter-spacing: -0.3px;
   }
 
   .blog-post-body :global(h3) {
+    font-family: var(--font-display);
     color: var(--text-primary);
     font-size: 20px;
-    font-weight: 400;
-    margin: 36px 0 12px;
+    font-weight: 600;
+    margin: 40px 0 14px;
   }
 
   .blog-post-body :global(p) {
@@ -218,11 +229,11 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .blog-post-body :global(pre) {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 24px;
-    margin: 24px 0;
+    margin: 28px 0;
     overflow-x: auto;
   }
 
@@ -287,9 +298,9 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(129, 140, 248, 0.15);
-    border: 1px solid rgba(129, 140, 248, 0.3);
-    color: var(--accent-start);
+    background: rgba(124, 106, 239, 0.1);
+    border: 1px solid rgba(124, 106, 239, 0.2);
+    color: var(--accent-mid);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -308,9 +319,9 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .scroll-to-top:hover {
-    background: rgba(129, 140, 248, 0.25);
+    background: rgba(124, 106, 239, 0.2);
     border-color: var(--accent-start);
-    box-shadow: 0 0 16px rgba(129, 140, 248, 0.2);
+    box-shadow: 0 0 16px rgba(124, 106, 239, 0.15);
   }
 
   @media (max-width: 768px) {
