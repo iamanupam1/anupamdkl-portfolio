@@ -20,13 +20,22 @@ import Contact from '../components/Contact.astro';
 </Layout>
 
 <script>
-  import { initHeroAnimations, initNavScroll } from '../scripts/animations';
+  import {
+    initHeroAnimations,
+    initNavScroll,
+    initProjectsAnimations,
+    initAboutAnimations,
+    initContactAnimations,
+  } from '../scripts/animations';
   import { initOverlay } from '../scripts/overlay';
   import { initConstellation } from '../scripts/constellation';
 
   document.addEventListener('DOMContentLoaded', () => {
     initNavScroll();
     initHeroAnimations();
+    initProjectsAnimations();
+    initAboutAnimations();
+    initContactAnimations();
     initOverlay();
     initConstellation('constellation-canvas');
   });

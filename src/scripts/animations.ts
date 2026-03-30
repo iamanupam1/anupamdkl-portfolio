@@ -102,3 +102,88 @@ export function initNavScroll(): void {
     });
   }
 }
+
+export function initProjectsAnimations(): void {
+  if (prefersReducedMotion()) {
+    gsap.set('.project-card', { opacity: 1, y: 0 });
+    return;
+  }
+
+  gsap.fromTo(
+    '.project-card',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.projects-grid',
+        start: 'top bottom-=100',
+      },
+    }
+  );
+}
+
+export function initAboutAnimations(): void {
+  if (prefersReducedMotion()) {
+    gsap.set('.about-paragraph, .resume-button', { opacity: 1, y: 0 });
+    return;
+  }
+
+  gsap.fromTo(
+    '.about-paragraph',
+    { opacity: 0, y: 30 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.about-grid',
+        start: 'top bottom-=100',
+      },
+    }
+  );
+
+  gsap.fromTo(
+    '.resume-button',
+    { opacity: 0, y: 20 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.resume-button',
+        start: 'top bottom-=50',
+      },
+    }
+  );
+}
+
+export function initContactAnimations(): void {
+  if (prefersReducedMotion()) {
+    gsap.set('.contact-title, .contact-subtitle, .contact-link, .footer p', { opacity: 1, y: 0 });
+    return;
+  }
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.contact-section',
+      start: 'top bottom-=100',
+    },
+  });
+
+  tl.fromTo('.contact-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
+    .fromTo('.contact-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+    .fromTo(
+      '.contact-link',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' },
+      '-=0.2'
+    )
+    .fromTo('.footer p', { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.1');
+}
