@@ -24,6 +24,9 @@
   /* Spacing */
   --section-padding: 120px 48px;
   --section-padding-mobile: 80px 24px;
+
+  /* Layout */
+  --max-width: 1200px;
 }
 
 html {

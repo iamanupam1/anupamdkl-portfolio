@@ -25,6 +25,8 @@ import { projects } from '../data/projects';
   .projects-section {
     padding: var(--section-padding);
     position: relative;
+    max-width: var(--max-width);
+    margin: 0 auto;
   }
 
   .projects-header {
@@ -49,6 +51,12 @@ import { projects } from '../data/projects';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+    justify-items: center;
+  }
+
+  .projects-grid > :global(:last-child:nth-child(odd)) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 12px);
   }
 
   @media (max-width: 768px) {
