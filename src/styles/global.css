@@ -6,32 +6,36 @@
 }
 
 :root {
-  /* Colors */
-  --bg: #08080d;
-  --bg-elevated: #0e0e16;
-  --text-primary: #eef0f6;
-  --text-muted: #8b8fa3;
-  --text-dim: #5a5e73;
-  --accent-start: #7c6aef;
-  --accent-mid: #a78bfa;
-  --accent-end: #e879a8;
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-glow: rgba(124, 106, 239, 0.15);
+  /* Colors — mockup palette */
+  --bg: #0a0a0f;
+  --bg-elevated: rgba(255, 255, 255, 0.03);
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --accent-purple: #a78bfa;
+  --accent-violet: #c084fc;
+  --accent-pink: #f472b6;
+  --accent-start: #6366f1;
+  --accent-mid: #818cf8;
+  --accent-end: #c084fc;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(99, 102, 241, 0.3);
+  --border-glow: rgba(124, 106, 239, 0.4);
 
-  /* Typography */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+  /* Typography — Inter as per mockup */
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Inter', sans-serif;
 
   /* Easing */
-  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-
-  /* Spacing */
-  --section-padding: 140px 48px;
-  --section-padding-mobile: 100px 24px;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Layout */
   --max-width: 1200px;
+  --section-padding: 120px 48px;
+  --section-padding-mobile: 80px 24px;
 }
 
 html {
@@ -43,21 +47,18 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Film grain overlay */
-body::after {
-  content: '';
+/* Grid overlay — per mockup */
+.grid-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
 a {
@@ -72,7 +73,7 @@ a {
   left: 16px;
   z-index: 9999;
   padding: 12px 24px;
-  background: var(--accent-start);
+  background: var(--accent);
   color: #fff;
   border-radius: 0 0 8px 8px;
   font-size: 14px;
@@ -85,18 +86,21 @@ a {
   top: 0;
 }
 
+/* Focus-visible */
+:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  body::after {
-    display: none;
-  }
 
-  /* Ensure all animated elements are visible */
-  .hero-gradient,
   .hero-label,
   .hero-word,
   .hero-subtitle,
@@ -104,13 +108,8 @@ a {
   .scroll-indicator,
   .project-card,
   .blog-card,
-  .about-paragraph,
-  .resume-button,
-  .about-stat,
-  .contact-title,
-  .contact-subtitle,
-  .contact-tile,
-  .contact-footer {
+  .about-text p,
+  .stat {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -126,24 +125,16 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 106, 239, 0.25);
+  background: rgba(99,102,241,0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 106, 239, 0.45);
+  background: rgba(99,102,241,0.45);
 }
 
 /* Selection color */
 ::selection {
-  background: rgba(124, 106, 239, 0.3);
+  background: rgba(99,102,241,0.3);
   color: var(--text-primary);
-}
-
-/* Shared orb animation */
-@keyframes orbFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -20px) scale(1.05); }
-  50% { transform: translate(-20px, 15px) scale(0.95); }
-  75% { transform: translate(15px, 25px) scale(1.02); }
 }

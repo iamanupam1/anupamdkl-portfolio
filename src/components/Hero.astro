@@ -1,17 +1,11 @@
 <section class="hero" id="hero">
   <div class="hero-gradient"></div>
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-  <div class="hero-orb hero-orb-3"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-particles" id="hero-particles"></div>
-  <div class="hero-vignette"></div>
+  <div class="particles" id="hero-particles"></div>
 
   <div class="hero-content">
     <div class="hero-label">Full-Stack Engineer</div>
     <h1 class="hero-title">
-      <span class="hero-word">Building</span>
-      <span class="hero-word">digital</span>
+      <span class="hero-word">Building digital</span><br />
       <span class="hero-word hero-accent">experiences</span>
     </h1>
     <div class="hero-divider"></div>
@@ -19,119 +13,81 @@
   </div>
 
   <div class="scroll-indicator" id="scroll-indicator">
-    <div class="scroll-line"></div>
+    <div></div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
     min-height: 100vh;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
   }
 
   .hero-gradient {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 25% 35%, rgba(124, 106, 239, 0.25) 0%, transparent 55%),
-      radial-gradient(ellipse at 75% 55%, rgba(167, 139, 250, 0.15) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 90%, rgba(232, 121, 168, 0.1) 0%, transparent 40%),
-      radial-gradient(ellipse at 60% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
-    opacity: 0;
+      radial-gradient(ellipse at 30% 40%, rgba(99,102,241,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(168,85,247,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.08) 0%, transparent 40%);
+    animation: gradientShift 8s ease-in-out infinite alternate;
   }
 
-  /* Floating ambient orbs */
-  .hero-orb {
+  @keyframes gradientShift {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  :global(.particle) {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-    animation: orbFloat 20s ease-in-out infinite;
+    background: #818cf8;
+    box-shadow: 0 0 8px currentColor;
+    animation: float linear infinite;
   }
 
-  .hero-orb-1 {
-    width: 500px;
-    height: 500px;
-    background: rgba(124, 106, 239, 0.08);
-    top: -10%;
-    left: -5%;
-    animation-delay: 0s;
-  }
-
-  .hero-orb-2 {
-    width: 400px;
-    height: 400px;
-    background: rgba(232, 121, 168, 0.06);
-    bottom: -10%;
-    right: -5%;
-    animation-delay: -7s;
-  }
-
-  .hero-orb-3 {
-    width: 300px;
-    height: 300px;
-    background: rgba(167, 139, 250, 0.05);
-    top: 40%;
-    right: 20%;
-    animation-delay: -14s;
-  }
-
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(124, 106, 239, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124, 106, 239, 0.025) 1px, transparent 1px);
-    background-size: 80px 80px;
-    pointer-events: none;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-  }
-
-  .hero-vignette {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 40%, var(--bg) 100%);
-  }
-
-  .hero-particles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
   }
 
   .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     position: relative;
     z-index: 10;
-    text-align: center;
     padding: 0 24px;
   }
 
   .hero-label {
-    font-family: var(--font-body);
-    color: var(--text-dim);
-    font-size: 11px;
-    letter-spacing: 5px;
+    color: #94a3b8;
+    font-size: 12px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     opacity: 0;
-    font-weight: 300;
   }
 
   .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(44px, 8vw, 84px);
-    font-weight: 700;
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 200;
     line-height: 1.1;
-    margin-bottom: 28px;
-    letter-spacing: -0.5px;
+    margin-bottom: 24px;
   }
 
   .hero-word {
@@ -140,90 +96,73 @@
   }
 
   .hero-accent {
-    display: block;
-    font-weight: 700;
-    letter-spacing: 0px;
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid), var(--accent-end));
-    background-size: 200% 200%;
+    font-weight: 600;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
+    background-size: 200% 200%;
   }
 
   .hero-divider {
-    width: 48px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-    margin: 0 auto 28px;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #6366f1, transparent);
+    margin-bottom: 24px;
     transform: scaleX(0);
-    border-radius: 1px;
   }
 
   .hero-subtitle {
-    font-family: var(--font-body);
-    color: var(--text-dim);
-    font-size: 15px;
+    color: #64748b;
+    font-size: 16px;
     font-weight: 300;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
     opacity: 0;
   }
 
-  /* Minimal scroll line instead of mouse icon */
   .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 32px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
+    animation: bounce 2s ease infinite;
     opacity: 0;
   }
 
-  .scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, var(--accent-start), transparent);
+  .scroll-indicator div {
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(148,163,184,0.3);
+    border-radius: 12px;
     position: relative;
-    overflow: hidden;
   }
 
-  .scroll-line::after {
+  .scroll-indicator div::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 12px;
-    background: var(--accent-mid);
-    animation: scrollPulse 2s ease-in-out infinite;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: #818cf8;
+    border-radius: 2px;
+    animation: scrollDot 2s ease infinite;
   }
 
-  @keyframes scrollPulse {
-    0% { top: -12px; opacity: 0; }
-    30% { opacity: 1; }
-    100% { top: 48px; opacity: 0; }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes scrollDot {
+    0% { opacity: 1; top: 6px; }
+    100% { opacity: 0; top: 20px; }
   }
 
   @media (max-width: 768px) {
     .hero-title {
       font-size: clamp(32px, 10vw, 56px);
-    }
-    .hero-orb { display: none; }
-  }
-
-  @keyframes particleFloat {
-    0% {
-      transform: translateY(100vh) scale(0);
-      opacity: 0;
-    }
-    10% {
-      opacity: 0.6;
-    }
-    90% {
-      opacity: 0.6;
-    }
-    100% {
-      transform: translateY(-10vh) scale(1);
-      opacity: 0;
     }
   }
 </style>

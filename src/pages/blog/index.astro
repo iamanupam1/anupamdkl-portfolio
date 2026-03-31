@@ -56,18 +56,17 @@ const posts = (await getCollection('blog'))
     justify-content: space-between;
     align-items: center;
     padding: 24px 48px;
-    background: rgba(8, 8, 13, 0.85);
+    background: rgba(10, 10, 15, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .blog-nav-logo {
-    font-family: var(--font-display);
     font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 3px;
-    color: var(--text-primary);
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #e2e8f0;
   }
 
   .blog-nav-links {
@@ -76,19 +75,19 @@ const posts = (await getCollection('blog'))
   }
 
   .blog-nav-link {
-    color: var(--text-muted);
+    color: #94a3b8;
     font-size: 13px;
     letter-spacing: 0.5px;
     transition: color 0.3s;
   }
 
   .blog-nav-link:hover {
-    color: var(--text-primary);
+    color: #e2e8f0;
   }
 
   .blog-listing {
-    padding: 140px 48px 80px;
-    max-width: 1100px;
+    padding: 120px 48px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
@@ -100,49 +99,49 @@ const posts = (await getCollection('blog'))
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--text-muted);
+    color: #94a3b8;
     font-size: 13px;
     margin-bottom: 24px;
     transition: color 0.3s;
   }
 
   .blog-listing-back:hover {
-    color: var(--text-primary);
+    color: #e2e8f0;
   }
 
   .section-label {
     display: block;
-    font-family: var(--font-body);
-    color: var(--accent-start);
+    color: #6366f1;
     font-size: 11px;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 16px;
-    font-weight: 400;
+    margin-bottom: 12px;
   }
 
   .section-title {
-    font-family: var(--font-display);
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 48px;
   }
 
   .blog-listing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 24px;
   }
 
   /* Entrance animation for listing page cards */
   .blog-listing-grid :global(.blog-card) {
     opacity: 0;
-    animation: fadeUp 0.6s var(--ease-cinematic) forwards;
+    animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   .blog-listing-grid :global(.blog-card:nth-child(1)) { animation-delay: 0.1s; }
   .blog-listing-grid :global(.blog-card:nth-child(2)) { animation-delay: 0.2s; }
   .blog-listing-grid :global(.blog-card:nth-child(3)) { animation-delay: 0.3s; }
+  .blog-listing-grid :global(.blog-card:nth-child(4)) { animation-delay: 0.4s; }
+  .blog-listing-grid :global(.blog-card:nth-child(5)) { animation-delay: 0.5s; }
+  .blog-listing-grid :global(.blog-card:nth-child(6)) { animation-delay: 0.6s; }
 
   @keyframes fadeUp {
     from {
@@ -152,12 +151,6 @@ const posts = (await getCollection('blog'))
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .blog-listing-grid {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 
@@ -171,7 +164,7 @@ const posts = (await getCollection('blog'))
     }
 
     .blog-listing {
-      padding: 120px 24px 60px;
+      padding: 100px 24px;
     }
 
     .blog-listing-grid {

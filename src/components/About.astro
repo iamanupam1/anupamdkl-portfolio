@@ -1,238 +1,93 @@
----
-import Constellation from './Constellation.astro';
-
-const stats = [
-  { value: '5+', label: 'Years Exp.' },
-  { value: '20+', label: 'Projects' },
-  { value: '∞', label: 'Curiosity' },
-];
----
-
 <section class="about-section" id="about">
-  <div class="about-layout">
-    <div class="about-visual-col">
-      <div class="about-visual">
-        <Constellation />
-      </div>
-      <div class="about-stats">
-        {stats.map((stat, i) => (
-          <>
-            {i > 0 && <div class="about-stat-divider"></div>}
-            <div class="about-stat">
-              <span class="about-stat-value">{stat.value}</span>
-              <span class="about-stat-label">{stat.label}</span>
-            </div>
-          </>
-        ))}
-      </div>
+  <span class="about-label">About</span>
+  <h2 class="about-title">A bit about me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.</p>
+      <p>When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with creative coding.</p>
     </div>
-    <div class="about-text-col">
-      <span class="section-label">About</span>
-      <h2 class="section-title">A bit<br />about me</h2>
-      <div class="about-divider"></div>
-      <p class="about-paragraph">
-        I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.
-      </p>
-      <p class="about-paragraph">
-        When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with creative coding.
-      </p>
-      <a href="/resume.pdf" download class="resume-button">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 2v9m0 0L5 8m3 3l3-3M3 13h10" />
-        </svg>
-        Download Resume
-      </a>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Projects Shipped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Technologies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Curiosity</div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .about-section {
-    padding: var(--section-padding);
+    padding: 120px 48px;
     position: relative;
-    max-width: var(--max-width);
-    margin: 0 auto;
   }
 
-  .about-layout {
+  .about-label {
+    display: block;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .about-title {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+
+  .about-grid {
     display: grid;
-    grid-template-columns: 0.45fr 0.55fr;
-    gap: 0;
-    align-items: stretch;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
   }
 
-  .about-visual-col {
-    position: relative;
-    background: linear-gradient(160deg, rgba(124, 106, 239, 0.07) 0%, rgba(167, 139, 250, 0.03) 100%);
-    border-right: 1px solid rgba(124, 106, 239, 0.08);
-    border-radius: 20px 0 0 20px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  .about-text {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
   }
 
-  .about-visual-col::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 40%, rgba(124, 106, 239, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .about-visual {
-    flex: 1;
-    position: relative;
-    z-index: 1;
-    min-height: 320px;
+  .about-text p {
+    margin-bottom: 16px;
   }
 
   .about-stats {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
-    padding: 28px 20px;
-    border-top: 1px solid rgba(124, 106, 239, 0.06);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 
-  .about-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    opacity: 0;
+  .stat {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
   }
 
-  .about-stat-value {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1;
+  .stat-number {
+    font-size: 32px;
+    font-weight: 200;
+    color: var(--accent-light);
   }
 
-  .about-stat-label {
-    font-family: var(--font-body);
-    font-size: 11px;
+  .stat-label {
     color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 400;
-  }
-
-  .about-stat-divider {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, transparent, rgba(124, 106, 239, 0.2), transparent);
-  }
-
-  .about-text-col {
-    position: relative;
-    padding: 60px 0 60px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .section-label {
-    display: block;
-    font-family: var(--font-body);
-    color: var(--accent-start);
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    font-weight: 400;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-    margin-bottom: 0;
-  }
-
-  .about-divider {
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-    margin: 28px 0;
-    border-radius: 1px;
-  }
-
-  .about-paragraph {
-    color: var(--text-muted);
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 18px;
-    opacity: 0;
-    font-weight: 300;
-  }
-
-  .resume-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 12px 24px;
-    border: 1px solid rgba(124, 106, 239, 0.25);
-    border-radius: 8px;
-    color: var(--accent-start);
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    transition: all 0.4s var(--ease-cinematic);
-    opacity: 0;
-  }
-
-  .resume-button:hover {
-    border-color: var(--accent-start);
-    box-shadow: 0 0 24px rgba(124, 106, 239, 0.15);
-    color: var(--text-primary);
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: 768px) {
-    .about-section {
-      padding: var(--section-padding-mobile);
-    }
-
-    .about-layout {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-
-    .about-visual-col {
-      order: 2;
-      border-right: none;
-      border-radius: 16px;
-      border: 1px solid rgba(124, 106, 239, 0.08);
-    }
-
-    .about-visual {
-      min-height: 200px;
-    }
-
-    .about-text-col {
-      order: 1;
-      padding: 0;
-    }
-
-    .about-stats {
-      gap: 20px;
-      padding: 20px 16px;
-    }
-
-    .about-stat-value {
-      font-size: 28px;
-    }
-
-    .about-stat-divider {
-      height: 32px;
-    }
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-top: 4px;
   }
 </style>

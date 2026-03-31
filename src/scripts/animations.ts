@@ -65,7 +65,7 @@ export function initHeroAnimations(): void {
     opacity: 0,
   });
 
-  gsap.to('.hero-particles', {
+  gsap.to('.particles', {
     scrollTrigger: {
       trigger: '.hero',
       start: 'top top',
@@ -137,12 +137,12 @@ export function initBlogAnimations(): void {
 
 export function initAboutAnimations(): void {
   if (prefersReducedMotion()) {
-    gsap.set('.about-paragraph, .resume-button, .about-stat', { opacity: 1, y: 0 });
+    gsap.set('.about-text p, .stat', { opacity: 1, y: 0 });
     return;
   }
 
   gsap.fromTo(
-    '.about-paragraph',
+    '.about-text p',
     { opacity: 0, y: 30 },
     {
       opacity: 1,
@@ -151,29 +151,14 @@ export function initAboutAnimations(): void {
       stagger: 0.15,
       ease: 'power3.out',
       scrollTrigger: {
-        trigger: '.about-layout',
+        trigger: '.about-grid',
         start: 'top bottom-=100',
       },
     }
   );
 
   gsap.fromTo(
-    '.resume-button',
-    { opacity: 0, y: 20 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.resume-button',
-        start: 'top bottom-=50',
-      },
-    }
-  );
-
-  gsap.fromTo(
-    '.about-stat',
+    '.stat',
     { opacity: 0, y: 20 },
     {
       opacity: 1,
@@ -190,25 +175,5 @@ export function initAboutAnimations(): void {
 }
 
 export function initContactAnimations(): void {
-  if (prefersReducedMotion()) {
-    gsap.set('.contact-title, .contact-subtitle, .contact-tile, .contact-footer', { opacity: 1, y: 0 });
-    return;
-  }
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.contact-section',
-      start: 'top bottom-=100',
-    },
-  });
-
-  tl.fromTo('.contact-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
-    .fromTo('.contact-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-    .fromTo(
-      '.contact-tile',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' },
-      '-=0.2'
-    )
-    .fromTo('.contact-footer', { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.1');
+  // Contact section is a simple footer — no scroll-triggered animations needed
 }
