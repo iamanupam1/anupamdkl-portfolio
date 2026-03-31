@@ -28,16 +28,21 @@ const { title } = Astro.props;
     <noscript>
       <style>
         .hero-gradient, .hero-label, .hero-word, .hero-subtitle, .hero-divider,
-        .scroll-indicator, .project-card, .blog-card, .about-text p,
-        .stat {
+        .scroll-indicator, .project-row, .blog-card, .about-text p,
+        .stat, .contact-link {
           opacity: 1 !important;
           transform: none !important;
+        }
+        .cursor-dot, .cursor-ring {
+          display: none !important;
         }
       </style>
     </noscript>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
     <slot />
   </body>
 </html>
