@@ -24,7 +24,7 @@
   --border-accent: rgba(99, 102, 241, 0.3);
   --border-glow: rgba(124, 106, 239, 0.4);
 
-  /* Typography — Inter as per mockup */
+  /* Typography */
   --font-body: 'Inter', sans-serif;
   --font-display: 'Inter', sans-serif;
 
@@ -49,16 +49,61 @@ body {
   overflow-x: hidden;
 }
 
-/* Grid overlay — per mockup */
-.grid-overlay {
+/* Custom cursor — hidden on touch devices */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
+
+.cursor-dot {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--text-primary);
+  border-radius: 50%;
   pointer-events: none;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--accent-light);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: width 0.3s var(--ease-cinematic),
+              height 0.3s var(--ease-cinematic),
+              border-color 0.3s var(--ease-cinematic),
+              margin 0.3s var(--ease-cinematic);
+}
+
+.cursor-ring.hovering {
+  width: 52px;
+  height: 52px;
+  border-color: var(--accent);
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+/* Hide cursor elements on touch devices */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
 }
 
 a {
@@ -106,10 +151,11 @@ a {
   .hero-subtitle,
   .hero-divider,
   .scroll-indicator,
-  .project-card,
+  .project-row,
   .blog-card,
   .about-text p,
-  .stat {
+  .stat,
+  .contact-link {
     opacity: 1 !important;
     transform: none !important;
   }
