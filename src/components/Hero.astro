@@ -12,7 +12,6 @@
     <h1 class="hero-title">
       <span class="hero-word">Building</span>
       <span class="hero-word">digital</span>
-      <br />
       <span class="hero-word hero-accent">experiences</span>
     </h1>
     <div class="hero-divider"></div>
@@ -82,12 +81,6 @@
     animation-delay: -14s;
   }
 
-  @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(30px, -20px) scale(1.05); }
-    50% { transform: translate(-20px, 15px) scale(0.95); }
-    75% { transform: translate(15px, 25px) scale(1.02); }
-  }
 
   .hero-grid {
     position: absolute;
@@ -147,6 +140,7 @@
   }
 
   .hero-accent {
+    display: block;
     font-weight: 700;
     letter-spacing: 0px;
     background: linear-gradient(135deg, var(--accent-start), var(--accent-mid), var(--accent-end));

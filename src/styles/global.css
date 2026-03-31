@@ -65,6 +65,26 @@ a {
   text-decoration: none;
 }
 
+/* Skip to content link */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--accent-start);
+  color: #fff;
+  border-radius: 0 0 8px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -73,6 +93,25 @@ a {
   }
   body::after {
     display: none;
+  }
+
+  /* Ensure all animated elements are visible */
+  .hero-gradient,
+  .hero-label,
+  .hero-word,
+  .hero-subtitle,
+  .hero-divider,
+  .scroll-indicator,
+  .project-card,
+  .blog-card,
+  .about-paragraph,
+  .resume-button,
+  .contact-title,
+  .contact-subtitle,
+  .contact-link,
+  .footer p {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
@@ -98,4 +137,12 @@ a {
 ::selection {
   background: rgba(124, 106, 239, 0.3);
   color: var(--text-primary);
+}
+
+/* Shared orb animation */
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 15px) scale(0.95); }
+  75% { transform: translate(15px, 25px) scale(1.02); }
 }
