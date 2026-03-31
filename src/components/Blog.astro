@@ -8,11 +8,8 @@ const posts = (await getCollection('blog'))
   .slice(0, 3);
 ---
 
-<section class="blog-section" id="blog">
-  <div class="blog-header">
-    <span class="section-label">Blog</span>
-    <h2 class="section-title">Thoughts & explorations</h2>
-  </div>
+<div class="blog-block">
+  <span class="section-label">Thoughts & explorations</span>
   <div class="blog-grid">
     {posts.map((post) => (
       <BlogCard
@@ -33,36 +30,21 @@ const posts = (await getCollection('blog'))
       </svg>
     </a>
   </div>
-</section>
+</div>
 
 <style>
-  .blog-section {
-    padding: var(--section-padding);
-    position: relative;
-    max-width: var(--max-width);
-    margin: 0 auto;
-  }
-
-  .blog-header {
-    margin-bottom: 48px;
+  .blog-block {
+    padding-top: 0;
   }
 
   .section-label {
     display: block;
-    font-family: var(--font-body);
-    color: var(--accent-start);
+    color: var(--accent);
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
     font-weight: 400;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
   }
 
   .blog-grid {
@@ -81,15 +63,15 @@ const posts = (await getCollection('blog'))
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    border: 1px solid rgba(129, 140, 248, 0.3);
+    border: 1px solid var(--border-accent);
     border-radius: 8px;
-    color: var(--accent-start);
+    color: var(--accent-light);
     font-size: 14px;
     transition: all 0.3s var(--ease-cinematic);
   }
 
   .blog-view-all:hover {
-    border-color: var(--accent-start);
+    border-color: var(--accent);
     box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
     color: var(--text-primary);
   }
@@ -101,10 +83,6 @@ const posts = (await getCollection('blog'))
   }
 
   @media (max-width: 768px) {
-    .blog-section {
-      padding: var(--section-padding-mobile);
-    }
-
     .blog-grid {
       grid-template-columns: 1fr;
     }
