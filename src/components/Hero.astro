@@ -1,5 +1,10 @@
 <section class="hero" id="hero">
-  <div class="hero-gradient"></div>
+  <div class="hero-gradient">
+    <div class="gradient-orb gradient-orb-1" id="gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2" id="gradient-orb-2"></div>
+    <div class="gradient-orb gradient-orb-3" id="gradient-orb-3"></div>
+  </div>
+  <div class="hero-fade"></div>
   <div class="hero-noise"></div>
   <div class="hero-particles">
     <div class="particle" style="width:3px;height:3px;left:15%;top:20%;animation-duration:8s;animation-delay:0s;background:#818cf8;"></div>
@@ -38,11 +43,52 @@
   .hero-gradient {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse at 30% 40%, rgba(99,102,241,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 60%, rgba(168,85,247,0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.08) 0%, transparent 40%);
+  }
+
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     animation: gradientShift 8s ease-in-out infinite alternate;
+  }
+
+  .gradient-orb-1 {
+    width: 500px;
+    height: 500px;
+    background: rgba(99,102,241,0.18);
+    top: 10%;
+    left: 15%;
+  }
+
+  .gradient-orb-2 {
+    width: 400px;
+    height: 400px;
+    background: rgba(168,85,247,0.13);
+    bottom: 5%;
+    right: 10%;
+    animation-delay: 2s;
+  }
+
+  .gradient-orb-3 {
+    width: 300px;
+    height: 300px;
+    background: rgba(59,130,246,0.1);
+    top: 45%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+
+  .hero-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    z-index: 5;
+    pointer-events: none;
   }
 
   .hero-noise {

@@ -52,6 +52,30 @@ export function initHeroAnimations(): void {
     { duration: 0.4, delay: 1.4 }
   );
 
+  // Mouse-reactive gradient orbs
+  const hero = document.querySelector('.hero') as HTMLElement;
+  const orb1 = document.getElementById('gradient-orb-1');
+  const orb2 = document.getElementById('gradient-orb-2');
+  const orb3 = document.getElementById('gradient-orb-3');
+
+  if (hero && orb1 && orb2 && orb3) {
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      orb1.style.transform = `translate(${x * 80}px, ${y * 60}px)`;
+      orb2.style.transform = `translate(${x * -50}px, ${y * -40}px)`;
+      orb3.style.transform = `translate(${x * 40}px, ${y * 30}px)`;
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      orb1.style.transform = 'translate(0, 0)';
+      orb2.style.transform = 'translate(0, 0)';
+      orb3.style.transform = 'translate(0, 0)';
+    });
+  }
+
   // Gradient shimmer on accent word
   animate('.hero-accent',
     { backgroundPosition: ['0% 0%', '200% 200%'] },
