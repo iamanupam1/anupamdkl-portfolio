@@ -4,67 +4,189 @@ interface Props {
   tag: string;
   title: string;
   summary: string;
+  description: string;
+  techStack: string[];
   gradient: string;
+  liveUrl?: string;
+  githubUrl?: string;
+  index: number;
 }
 
-const { id, tag, title, summary } = Astro.props;
+const { id, tag, title, summary, description, techStack, gradient, liveUrl, githubUrl, index } = Astro.props;
+const isEven = index % 2 === 1;
 ---
 
-<div class="project-card" data-project-id={id} tabindex="0" role="article">
-  <div class="project-image">PROJECT PREVIEW</div>
-  <span class="project-tag">{tag}</span>
-  <h3>{title}</h3>
-  <p>{summary}</p>
-</div>
+<article class:list={['project-row', { 'project-row--reversed': isEven }]} data-project-id={id}>
+  <div class="project-image" style={`background: ${gradient}`}>
+    <div class="project-image-noise"></div>
+    <span class="project-image-label">PROJECT PREVIEW</span>
+  </div>
+  <div class="project-details">
+    <span class="project-tag">{tag}</span>
+    <h3 class="project-title">{title}</h3>
+    <p class="project-summary">{description}</p>
+    <div class="project-tech">
+      {techStack.map((tech) => (
+        <span class="tech-pill">{tech}</span>
+      ))}
+    </div>
+    <div class="project-links">
+      {liveUrl && (
+        <a href={liveUrl} class="project-link" target="_blank" rel="noopener">
+          Live Demo
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 3h8v8m0-8L5 11" />
+          </svg>
+        </a>
+      )}
+      {githubUrl && (
+        <a href={githubUrl} class="project-link" target="_blank" rel="noopener">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 3h8v8m0-8L5 11" />
+          </svg>
+        </a>
+      )}
+    </div>
+  </div>
+</article>
 
 <style>
-  .project-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 32px;
-    transition: all 0.4s var(--ease-standard);
-    cursor: pointer;
+  .project-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 48px;
+    align-items: center;
+    opacity: 0;
   }
 
-  .project-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(99, 102, 241, 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  .project-row--reversed {
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .project-row--reversed .project-image {
+    order: 2;
+  }
+
+  .project-row--reversed .project-details {
+    order: 1;
   }
 
   .project-image {
-    height: 180px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-    border-radius: 8px;
-    margin-bottom: 20px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4b5563;
+    transition: transform 0.4s var(--ease-cinematic);
+  }
+
+  .project-row:hover .project-image {
+    transform: scale(1.02);
+  }
+
+  .project-image-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .project-image-label {
+    color: rgba(255, 255, 255, 0.2);
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-details {
+    padding: 16px 0;
   }
 
   .project-tag {
     display: inline-block;
     color: var(--accent-light);
     font-size: 10px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    font-weight: 400;
   }
 
-  .project-card h3 {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 8px;
+  .project-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
   }
 
-  .project-card p {
-    color: var(--text-dim);
-    font-size: 14px;
-    line-height: 1.6;
+  .project-summary {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .tech-pill {
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    color: var(--accent-mid);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 8px 0;
+    transition: color 0.3s;
+  }
+
+  .project-link:hover {
+    color: var(--accent-light);
+  }
+
+  @media (max-width: 768px) {
+    .project-row,
+    .project-row--reversed {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .project-row--reversed .project-image {
+      order: 0;
+    }
+
+    .project-row--reversed .project-details {
+      order: 0;
+    }
+
+    .project-title {
+      font-size: 22px;
+    }
   }
 </style>
