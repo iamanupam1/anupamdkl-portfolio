@@ -25,8 +25,8 @@
   --border-glow: rgba(124, 106, 239, 0.4);
 
   /* Typography */
-  --font-body: 'Inter', sans-serif;
-  --font-display: 'Inter', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-display: 'Syne', sans-serif;
 
   /* Easing */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
