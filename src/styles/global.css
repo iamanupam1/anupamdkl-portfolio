@@ -109,8 +109,8 @@ a {
   .about-stat,
   .contact-title,
   .contact-subtitle,
-  .contact-link,
-  .footer p {
+  .contact-tile,
+  .contact-footer {
     opacity: 1 !important;
     transform: none !important;
   }

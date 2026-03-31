@@ -191,7 +191,7 @@ export function initAboutAnimations(): void {
 
 export function initContactAnimations(): void {
   if (prefersReducedMotion()) {
-    gsap.set('.contact-title, .contact-subtitle, .contact-link, .footer p', { opacity: 1, y: 0 });
+    gsap.set('.contact-title, .contact-subtitle, .contact-tile, .contact-footer', { opacity: 1, y: 0 });
     return;
   }
 
@@ -205,10 +205,10 @@ export function initContactAnimations(): void {
   tl.fromTo('.contact-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
     .fromTo('.contact-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
     .fromTo(
-      '.contact-link',
+      '.contact-tile',
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' },
       '-=0.2'
     )
-    .fromTo('.footer p', { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.1');
+    .fromTo('.contact-footer', { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.1');
 }
