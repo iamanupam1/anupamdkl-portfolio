@@ -87,21 +87,6 @@ export function initNavScroll(): void {
     onEnter: () => nav.classList.add('scrolled'),
     onLeaveBack: () => nav.classList.remove('scrolled'),
   });
-
-  // Mobile hamburger toggle
-  const hamburger = document.getElementById('nav-hamburger');
-  const navLinks = nav.querySelector('.nav-links');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-    // Close on link click
-    navLinks.querySelectorAll('.nav-link').forEach((link) => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
-    });
-  }
 }
 
 export function initProjectsAnimations(): void {
@@ -152,7 +137,7 @@ export function initBlogAnimations(): void {
 
 export function initAboutAnimations(): void {
   if (prefersReducedMotion()) {
-    gsap.set('.about-paragraph, .resume-button', { opacity: 1, y: 0 });
+    gsap.set('.about-paragraph, .resume-button, .about-stat', { opacity: 1, y: 0 });
     return;
   }
 
@@ -166,7 +151,7 @@ export function initAboutAnimations(): void {
       stagger: 0.15,
       ease: 'power3.out',
       scrollTrigger: {
-        trigger: '.about-grid',
+        trigger: '.about-layout',
         start: 'top bottom-=100',
       },
     }
@@ -182,6 +167,22 @@ export function initAboutAnimations(): void {
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '.resume-button',
+        start: 'top bottom-=50',
+      },
+    }
+  );
+
+  gsap.fromTo(
+    '.about-stat',
+    { opacity: 0, y: 20 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.about-stats',
         start: 'top bottom-=50',
       },
     }
