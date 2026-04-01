@@ -91,64 +91,36 @@ function drawDots(): void {
   }
 
   dotCtx.clearRect(0, 0, cachedHeroWidth, cachedHeroHeight);
-  const elapsed = (performance.now() - dotStartTime) / 1000;
 
-  dotCtx.beginPath();
-  const restOpacity = 0.08;
-  let hasRestDots = false;
-
-  const activeLines: { x: number; y: number; angle: number; len: number; opacity: number }[] = [];
+  // Only draw lines near cursor — canvas is empty at rest
+  dotCtx.lineCap = 'round';
+  dotCtx.lineWidth = 1.8;
 
   for (let i = 0; i < dots.length; i++) {
     const dot = dots[i];
-    const rippleDelay = dot.distFromCenter / 600;
-    const rippleProgress = Math.min(Math.max((elapsed - rippleDelay) / 0.4, 0), 1);
-    if (rippleProgress <= 0) continue;
-
     const dx = heroMouseX - dot.x;
     const dy = heroMouseY - dot.y;
     const distSq = dx * dx + dy * dy;
 
-    if (distSq < DOT_INFLUENCE_SQ) {
-      const dist = Math.sqrt(distSq);
-      const influence = 1 - dist / DOT_INFLUENCE;
-      const eased = influence * influence;
+    if (distSq >= DOT_INFLUENCE_SQ) continue;
 
-      if (eased > 0.05) {
-        activeLines.push({
-          x: dot.x,
-          y: dot.y,
-          angle: Math.atan2(dy, dx),
-          len: 10 * eased,
-          opacity: (0.08 + eased * 0.5) * rippleProgress,
-        });
-        continue;
-      }
-    }
+    const dist = Math.sqrt(distSq);
+    const influence = 1 - dist / DOT_INFLUENCE;
+    const eased = influence * influence;
+    if (eased <= 0.02) continue;
 
-    dotCtx.moveTo(dot.x + 1.8, dot.y);
-    dotCtx.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
-    hasRestDots = true;
-  }
+    const angle = Math.atan2(dy, dx);
+    const opacity = eased * 0.6;
+    const len = 14 * eased;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const halfLen = len / 2;
 
-  if (hasRestDots) {
-    dotCtx.fillStyle = `rgba(${dotColorR}, ${dotColorG}, ${dotColorB}, ${restOpacity})`;
-    dotCtx.fill();
-  }
-
-  if (activeLines.length > 0) {
-    dotCtx.lineCap = 'round';
-    dotCtx.lineWidth = 1.8;
-    for (const line of activeLines) {
-      const cos = Math.cos(line.angle);
-      const sin = Math.sin(line.angle);
-      const halfLen = line.len / 2;
-      dotCtx.beginPath();
-      dotCtx.moveTo(line.x - cos * halfLen, line.y - sin * halfLen);
-      dotCtx.lineTo(line.x + cos * halfLen, line.y + sin * halfLen);
-      dotCtx.strokeStyle = `rgba(${dotColorR}, ${dotColorG}, ${dotColorB}, ${line.opacity})`;
-      dotCtx.stroke();
-    }
+    dotCtx.beginPath();
+    dotCtx.moveTo(dot.x - cos * halfLen, dot.y - sin * halfLen);
+    dotCtx.lineTo(dot.x + cos * halfLen, dot.y + sin * halfLen);
+    dotCtx.strokeStyle = `rgba(${dotColorR}, ${dotColorG}, ${dotColorB}, ${opacity})`;
+    dotCtx.stroke();
   }
 
   dotAnimFrame = requestAnimationFrame(drawDots);
