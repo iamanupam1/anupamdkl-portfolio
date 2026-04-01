@@ -58,7 +58,7 @@
   .gradient-orb-1 {
     width: 600px;
     height: 600px;
-    background: rgba(200, 245, 66, 0.18);
+    background: var(--accent-glow-strong);
     top: 5%;
     left: 10%;
   }
@@ -66,7 +66,7 @@
   .gradient-orb-2 {
     width: 500px;
     height: 500px;
-    background: rgba(168, 214, 32, 0.12);
+    background: var(--accent-glow);
     bottom: 0%;
     right: 5%;
     animation-delay: 2s;
@@ -75,7 +75,7 @@
   .gradient-orb-3 {
     width: 400px;
     height: 400px;
-    background: rgba(200, 245, 66, 0.08);
+    background: var(--accent-tint);
     top: 40%;
     left: 45%;
     animation-delay: 4s;
@@ -102,7 +102,7 @@
   .hero-noise {
     position: absolute;
     inset: 0;
-    opacity: 0.04;
+    opacity: var(--noise-opacity);
     z-index: 3;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 256px;
@@ -155,7 +155,7 @@
   .hero-content-reveal .hero-accent {
     -webkit-text-stroke: 2px var(--accent);
     color: transparent;
-    text-shadow: 0 0 30px rgba(200, 245, 66, 0.3);
+    text-shadow: 0 0 30px var(--accent-glow-strong);
   }
 
   .hero-content-reveal .hero-divider {

@@ -30,10 +30,28 @@ let cachedHeroEl: HTMLElement | null = null;
 let cachedHeroWidth = 0;
 let cachedHeroHeight = 0;
 let cachedDpr = 1;
+let dotColorR = 200;
+let dotColorG = 245;
+let dotColorB = 66;
 
 const DOT_SPACING = 65;
 const DOT_INFLUENCE = 200;
 const DOT_INFLUENCE_SQ = DOT_INFLUENCE * DOT_INFLUENCE;
+
+function readAccentColor(): void {
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+  const tempEl = document.createElement('div');
+  tempEl.style.color = accentColor;
+  document.body.appendChild(tempEl);
+  const computed = getComputedStyle(tempEl).color;
+  document.body.removeChild(tempEl);
+  const match = computed.match(/(\d+),\s*(\d+),\s*(\d+)/);
+  if (match) {
+    dotColorR = parseInt(match[1]);
+    dotColorG = parseInt(match[2]);
+    dotColorB = parseInt(match[3]);
+  }
+}
 
 function resizeDotCanvas(): void {
   if (!dotCanvas || !dotCtx || !cachedHeroEl) return;
@@ -65,11 +83,8 @@ function resizeDotCanvas(): void {
 }
 
 function drawDots(): void {
-  if (!dotCtx) {
-    return;
-  }
+  if (!dotCtx) return;
 
-  // Skip rendering when scrolled past hero
   if (window.scrollY > cachedHeroHeight) {
     dotAnimFrame = requestAnimationFrame(drawDots);
     return;
@@ -78,12 +93,10 @@ function drawDots(): void {
   dotCtx.clearRect(0, 0, cachedHeroWidth, cachedHeroHeight);
   const elapsed = (performance.now() - dotStartTime) / 1000;
 
-  // Single beginPath for inactive dots
   dotCtx.beginPath();
-  const restOpacity = 0.03;
+  const restOpacity = 0.08;
   let hasRestDots = false;
 
-  // Collect active lines to draw after
   const activeLines: { x: number; y: number; angle: number; len: number; opacity: number }[] = [];
 
   for (let i = 0; i < dots.length; i++) {
@@ -107,28 +120,25 @@ function drawDots(): void {
           y: dot.y,
           angle: Math.atan2(dy, dx),
           len: 10 * eased,
-          opacity: (0.03 + eased * 0.3) * rippleProgress,
+          opacity: (0.08 + eased * 0.5) * rippleProgress,
         });
         continue;
       }
     }
 
-    // Rest dot — batch into single path
-    dotCtx.moveTo(dot.x + 1.2, dot.y);
-    dotCtx.arc(dot.x, dot.y, 1.2, 0, Math.PI * 2);
+    dotCtx.moveTo(dot.x + 1.8, dot.y);
+    dotCtx.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
     hasRestDots = true;
   }
 
-  // Draw all rest dots in one call
   if (hasRestDots) {
-    dotCtx.fillStyle = `rgba(200, 245, 66, ${restOpacity})`;
+    dotCtx.fillStyle = `rgba(${dotColorR}, ${dotColorG}, ${dotColorB}, ${restOpacity})`;
     dotCtx.fill();
   }
 
-  // Draw active lines individually (few of them, near cursor only)
   if (activeLines.length > 0) {
     dotCtx.lineCap = 'round';
-    dotCtx.lineWidth = 1.2;
+    dotCtx.lineWidth = 1.8;
     for (const line of activeLines) {
       const cos = Math.cos(line.angle);
       const sin = Math.sin(line.angle);
@@ -136,7 +146,7 @@ function drawDots(): void {
       dotCtx.beginPath();
       dotCtx.moveTo(line.x - cos * halfLen, line.y - sin * halfLen);
       dotCtx.lineTo(line.x + cos * halfLen, line.y + sin * halfLen);
-      dotCtx.strokeStyle = `rgba(200, 245, 66, ${line.opacity})`;
+      dotCtx.strokeStyle = `rgba(${dotColorR}, ${dotColorG}, ${dotColorB}, ${line.opacity})`;
       dotCtx.stroke();
     }
   }
@@ -144,22 +154,58 @@ function drawDots(): void {
   dotAnimFrame = requestAnimationFrame(drawDots);
 }
 
+function stopDotGrid(): void {
+  if (dotAnimFrame) {
+    cancelAnimationFrame(dotAnimFrame);
+    dotAnimFrame = 0;
+  }
+}
+
 function initDotGrid(): void {
+  stopDotGrid();
+
   dotCanvas = document.getElementById('hero-dot-canvas') as HTMLCanvasElement;
   if (!dotCanvas) return;
   dotCtx = dotCanvas.getContext('2d');
   if (!dotCtx) return;
 
   cachedHeroEl = document.getElementById('hero');
+  readAccentColor();
   dotStartTime = performance.now();
   resizeDotCanvas();
   window.addEventListener('resize', resizeDotCanvas);
   dotAnimFrame = requestAnimationFrame(drawDots);
 }
 
+// --- Cleanup tracking ---
+
+let scrollHandler: (() => void) | null = null;
+let heroInitialized = false;
+
+export function cleanupHero(): void {
+  stopDotGrid();
+  if (scrollHandler) {
+    window.removeEventListener('scroll', scrollHandler);
+    scrollHandler = null;
+  }
+  heroInitialized = false;
+}
+
+// Update dot grid colors when theme changes
+export function updateDotColors(): void {
+  readAccentColor();
+}
+
 // --- Hero Animations ---
 
 export function initHeroAnimations(): void {
+  if (heroInitialized) return;
+
+  const hero = document.querySelector('.hero') as HTMLElement;
+  if (!hero) return;
+
+  heroInitialized = true;
+
   if (prefersReducedMotion()) {
     showAll('.hero-gradient, .hero-label, .hero-word, .hero-subtitle');
     const divider = document.querySelector('.hero-divider') as HTMLElement;
@@ -196,42 +242,36 @@ export function initHeroAnimations(): void {
   );
 
   // Mouse-reactive gradient orbs + light cone + dot grid tracking
-  const hero = document.querySelector('.hero') as HTMLElement;
   const orb1 = document.getElementById('gradient-orb-1');
   const orb2 = document.getElementById('gradient-orb-2');
   const orb3 = document.getElementById('gradient-orb-3');
 
-  if (hero) {
-    hero.addEventListener('mousemove', (e) => {
-      const localX = e.clientX - hero.offsetLeft;
-      const localY = e.clientY - hero.offsetTop + window.scrollY;
-      const normX = localX / (hero.offsetWidth || 1) - 0.5;
-      const normY = localY / (hero.offsetHeight || 1) - 0.5;
+  hero.addEventListener('mousemove', (e) => {
+    const localX = e.clientX - hero.offsetLeft;
+    const localY = e.clientY - hero.offsetTop + window.scrollY;
+    const normX = localX / (hero.offsetWidth || 1) - 0.5;
+    const normY = localY / (hero.offsetHeight || 1) - 0.5;
 
-      // Orb parallax
-      if (orb1) orb1.style.transform = `translate(${normX * 150}px, ${normY * 120}px)`;
-      if (orb2) orb2.style.transform = `translate(${normX * -100}px, ${normY * -80}px)`;
-      if (orb3) orb3.style.transform = `translate(${normX * 80}px, ${normY * 60}px)`;
+    if (orb1) orb1.style.transform = `translate(${normX * 150}px, ${normY * 120}px)`;
+    if (orb2) orb2.style.transform = `translate(${normX * -100}px, ${normY * -80}px)`;
+    if (orb3) orb3.style.transform = `translate(${normX * 80}px, ${normY * 60}px)`;
 
-      // Light cone (CSS custom properties)
-      hero.style.setProperty('--mx', localX + 'px');
-      hero.style.setProperty('--my', (e.clientY - hero.getBoundingClientRect().top) + 'px');
+    hero.style.setProperty('--mx', localX + 'px');
+    hero.style.setProperty('--my', (e.clientY - hero.getBoundingClientRect().top) + 'px');
 
-      // Dot grid cursor position
-      heroMouseX = localX;
-      heroMouseY = e.clientY - hero.getBoundingClientRect().top;
-    });
+    heroMouseX = localX;
+    heroMouseY = e.clientY - hero.getBoundingClientRect().top;
+  });
 
-    hero.addEventListener('mouseleave', () => {
-      if (orb1) orb1.style.transform = 'translate(0, 0)';
-      if (orb2) orb2.style.transform = 'translate(0, 0)';
-      if (orb3) orb3.style.transform = 'translate(0, 0)';
-      heroMouseX = -1000;
-      heroMouseY = -1000;
-    });
-  }
+  hero.addEventListener('mouseleave', () => {
+    if (orb1) orb1.style.transform = 'translate(0, 0)';
+    if (orb2) orb2.style.transform = 'translate(0, 0)';
+    if (orb3) orb3.style.transform = 'translate(0, 0)';
+    heroMouseX = -1000;
+    heroMouseY = -1000;
+  });
 
-  // Scroll deconstruction — rAF-throttled
+  // Scroll deconstruction
   const label = document.getElementById('hero-label');
   const line1 = document.getElementById('hero-line1');
   const accent = document.getElementById('hero-accent');
@@ -239,10 +279,10 @@ export function initHeroAnimations(): void {
   const subtitle = document.getElementById('hero-subtitle');
   const reveal = document.getElementById('hero-reveal');
 
-  if (hero && label && line1 && accent && divider && subtitle) {
+  if (label && line1 && accent && divider && subtitle) {
     let scrollTicking = false;
 
-    window.addEventListener('scroll', () => {
+    scrollHandler = () => {
       if (scrollTicking) return;
       scrollTicking = true;
 
@@ -269,28 +309,24 @@ export function initHeroAnimations(): void {
 
           label.style.transform = `translateY(${-200 * ease}px)`;
           label.style.opacity = fadeStr;
-
           line1.style.transform = `translateX(${-120 * ease}px)`;
           line1.style.opacity = fadeStr;
-
           accent.style.transform = `translateX(${100 * ease}px) scale(${1 + 0.15 * ease})`;
           accent.style.opacity = fadeStr;
-
           divider.style.transform = `scaleX(${1 + 4 * ease})`;
           divider.style.opacity = fadeStr;
-
           subtitle.style.transform = `translateY(${80 * ease}px)`;
           subtitle.style.opacity = fadeStr;
-
           if (reveal) reveal.style.opacity = fadeStr;
         }
 
         scrollTicking = false;
       });
-    });
+    };
+
+    window.addEventListener('scroll', scrollHandler);
   }
 
-  // Init dot grid
   initDotGrid();
 }
 

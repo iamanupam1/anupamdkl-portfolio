@@ -7,7 +7,7 @@ import { projects } from '../data/projects';
 <Layout title="Projects — Anupam">
   <Nav solid />
 
-  <main class="projects-listing">
+  <main class="projects-listing" id="main-content">
     <div class="projects-listing-header">
       <a href="/" class="projects-listing-back">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -36,7 +36,7 @@ import { projects } from '../data/projects';
             </div>
             <div class="project-card-links">
               {project.liveUrl && (
-                <a href={project.liveUrl} class="project-card-link" target="_blank" rel="noopener">
+                <a href={project.liveUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   Live Demo
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 3h8v8m0-8L5 11" />
@@ -44,7 +44,7 @@ import { projects } from '../data/projects';
                 </a>
               )}
               {project.githubUrl && (
-                <a href={project.githubUrl} class="project-card-link" target="_blank" rel="noopener">
+                <a href={project.githubUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   GitHub
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 3h8v8m0-8L5 11" />
@@ -136,9 +136,9 @@ import { projects } from '../data/projects';
   .project-card:nth-child(5) { animation-delay: 0.33s; }
 
   .project-card:hover {
-    border-color: rgba(200, 245, 66, 0.2);
+    border-color: var(--border-accent);
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 32px var(--card-shadow);
   }
 
   .project-card-header {
@@ -151,7 +151,7 @@ import { projects } from '../data/projects';
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--accent);
-    background: rgba(200, 245, 66, 0.06);
+    background: var(--accent-tint);
     padding: 3px 10px;
     border-radius: 4px;
     margin-bottom: 16px;

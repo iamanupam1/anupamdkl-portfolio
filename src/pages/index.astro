@@ -36,7 +36,10 @@ import Contact from '../components/Contact.astro';
 </style>
 
 <script>
-  import { initHeroAnimations, initNavScroll, initProjectsAnimations, initBlogAnimations, initAboutAnimations, initContactAnimations } from '../scripts/animations';
+  import { initHeroAnimations, initNavScroll, initProjectsAnimations, initBlogAnimations, initAboutAnimations, initContactAnimations, cleanupHero } from '../scripts/animations';
+
+  // Cleanup previous hero state on View Transition swap
+  document.addEventListener('astro:before-swap', cleanupHero);
 
   initNavScroll();
   initHeroAnimations();

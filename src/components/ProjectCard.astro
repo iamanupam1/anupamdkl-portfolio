@@ -32,7 +32,7 @@ const isEven = index % 2 === 1;
     </div>
     <div class="project-links">
       {liveUrl && (
-        <a href={liveUrl} class="project-link" target="_blank" rel="noopener">
+        <a href={liveUrl} class="project-link" target="_blank" rel="noopener noreferrer">
           Live Demo
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 3h8v8m0-8L5 11" />
@@ -40,7 +40,7 @@ const isEven = index % 2 === 1;
         </a>
       )}
       {githubUrl && (
-        <a href={githubUrl} class="project-link" target="_blank" rel="noopener">
+        <a href={githubUrl} class="project-link" target="_blank" rel="noopener noreferrer">
           GitHub
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 3h8v8m0-8L5 11" />
@@ -90,7 +90,7 @@ const isEven = index % 2 === 1;
   .project-image-noise {
     position: absolute;
     inset: 0;
-    opacity: 0.08;
+    opacity: var(--noise-opacity);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 256px;
     mix-blend-mode: overlay;
@@ -98,7 +98,7 @@ const isEven = index % 2 === 1;
   }
 
   .project-image-label {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--preview-label);
     font-size: 12px;
     letter-spacing: 2px;
     position: relative;
@@ -143,8 +143,8 @@ const isEven = index % 2 === 1;
   }
 
   .tech-pill {
-    background: rgba(200, 245, 66, 0.06);
-    border: 1px solid rgba(200, 245, 66, 0.12);
+    background: var(--accent-tint);
+    border: 1px solid var(--accent-border);
     color: var(--accent);
     padding: 5px 14px;
     border-radius: 20px;

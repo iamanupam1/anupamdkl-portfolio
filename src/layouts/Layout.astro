@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+
 interface Props {
   title: string;
 }
@@ -9,6 +11,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <ViewTransitions />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portfolio of Anupam — Full-Stack Software Engineer" />
@@ -25,6 +28,18 @@ const { title } = Astro.props;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
     <title>{title}</title>
+    <!-- Prevent flash: set theme before render -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+          document.documentElement.dataset.theme = stored;
+        } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+        }
+      })();
+    </script>
     <noscript>
       <style>
         .hero-gradient, .hero-label, .hero-word, .hero-subtitle, .hero-divider,
@@ -54,5 +69,33 @@ const { title } = Astro.props;
 
 <script>
   import { initCursor } from '../scripts/cursor';
+  import { updateDotColors } from '../scripts/animations';
+
+  function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const current = document.documentElement.dataset.theme;
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('theme', next);
+        // Update dot grid colors for new theme
+        updateDotColors();
+      });
+    }
+  }
+
+  initThemeToggle();
   initCursor();
+
+  // Re-bind theme toggle after View Transition page swaps
+  document.addEventListener('astro:after-swap', initThemeToggle);
+
+  // Listen for OS theme changes (when no manual override)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+      updateDotColors();
+    }
+  });
 </script>
