@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
 
 interface Props {
   title: string;
@@ -18,48 +19,58 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 ---
 
 <Layout title={`${title} — Anupam`}>
-  <nav class="blog-nav">
-    <a href="/" class="blog-nav-logo">ANUPAM</a>
-    <div class="blog-nav-links">
-      <a href="/#work" class="blog-nav-link">Work</a>
-      <a href="/#blog" class="blog-nav-link">Blog</a>
-      <a href="/#about" class="blog-nav-link">About</a>
-      <a href="/#contact" class="blog-nav-link">Contact</a>
-    </div>
-  </nav>
+  <Nav solid />
 
   <article class="blog-post">
-    <header class="blog-post-header" style={`background: ${gradient}`}>
-      <div class="blog-post-header-content">
+    <header class="blog-post-header">
+      <div class="blog-post-header-inner">
         <a href="/blog" class="blog-post-back">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
           </svg>
           All posts
         </a>
-        <div class="blog-post-tags">
-          {tags.map((tag) => (
-            <span class="blog-post-tag">{tag}</span>
-          ))}
-        </div>
         <h1 class="blog-post-title">{title}</h1>
-        <time class="blog-post-date" datetime={date.toISOString()}>{formattedDate}</time>
+        <div class="blog-post-title-bar"></div>
+        <div class="blog-post-meta">
+          <time class="blog-post-date" datetime={date.toISOString()}>{formattedDate}</time>
+          <span class="blog-post-meta-sep">&middot;</span>
+          <span class="blog-post-reading-time" id="reading-time"></span>
+          <span class="blog-post-meta-sep" id="reading-time-sep" style="display:none;">&middot;</span>
+          <div class="blog-post-tags">
+            {tags.map((tag) => (
+              <span class="blog-post-tag">{tag}</span>
+            ))}
+          </div>
+        </div>
       </div>
     </header>
 
-    <div class="blog-post-body">
-      <slot />
-    </div>
-  </article>
+    <div class="blog-post-content">
+      <div class="blog-post-body" id="blog-post-body">
+        <slot />
+      </div>
 
-  <footer class="blog-post-footer">
-    <a href="/blog" class="blog-post-footer-link">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
-      </svg>
-      Back to all posts
-    </a>
-  </footer>
+      <aside class="blog-post-sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-label">In this article</div>
+          <nav class="sidebar-toc" id="sidebar-toc"></nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="blog-post-footer">
+      <div class="blog-post-footer-inner">
+        <div class="blog-post-footer-divider"></div>
+        <a href="/blog" class="blog-post-footer-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
+          </svg>
+          Back to all posts
+        </a>
+      </div>
+    </footer>
+  </article>
 
   <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
     <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -69,6 +80,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 </Layout>
 
 <script>
+  // Scroll to top
   const btn = document.getElementById('scroll-to-top');
   if (btn) {
     window.addEventListener('scroll', () => {
@@ -78,60 +90,78 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // Reading time
+  const body = document.getElementById('blog-post-body');
+  const readingTimeEl = document.getElementById('reading-time');
+  const readingTimeSep = document.getElementById('reading-time-sep');
+  if (body && readingTimeEl) {
+    const text = body.textContent || '';
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.max(1, Math.round(words / 230));
+    readingTimeEl.textContent = `${minutes} min read`;
+    if (readingTimeSep) readingTimeSep.style.display = '';
+  }
+
+  // Build TOC from H2s
+  const tocNav = document.getElementById('sidebar-toc');
+  if (body && tocNav) {
+    const headings = body.querySelectorAll('h2');
+    const tocLinks: HTMLAnchorElement[] = [];
+
+    headings.forEach((h2, i) => {
+      if (!h2.id) {
+        h2.id = 'section-' + i;
+      }
+
+      const link = document.createElement('a');
+      link.href = '#' + h2.id;
+      link.className = 'toc-link';
+      link.textContent = h2.textContent || '';
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tocNav.appendChild(link);
+      tocLinks.push(link);
+    });
+
+    if (tocLinks.length > 0) {
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          let activeIndex = 0;
+          headings.forEach((h2, i) => {
+            if (h2.getBoundingClientRect().top < 120) {
+              activeIndex = i;
+            }
+          });
+          tocLinks.forEach((link, i) => {
+            link.classList.toggle('active', i === activeIndex);
+          });
+          ticking = false;
+        });
+      });
+      tocLinks[0]?.classList.add('active');
+    }
+  }
 </script>
 
 <style>
-  .blog-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 48px;
-    background: rgba(8, 8, 13, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .blog-nav-logo {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 3px;
-    color: var(--text-primary);
-  }
-
-  .blog-nav-links {
-    display: flex;
-    gap: 32px;
-  }
-
-  .blog-nav-link {
-    color: var(--text-muted);
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    transition: color 0.3s;
-  }
-
-  .blog-nav-link:hover {
-    color: var(--text-primary);
-  }
-
   .blog-post {
     padding-top: 72px;
   }
 
+  /* --- Header (centered) --- */
   .blog-post-header {
-    padding: 80px 48px 60px;
-    position: relative;
+    padding: 72px 48px 48px;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
-  .blog-post-header-content {
-    max-width: 680px;
+  .blog-post-header-inner {
+    max-width: 780px;
     margin: 0 auto;
   }
 
@@ -139,64 +169,114 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--text-muted);
+    color: var(--text-dim);
     font-size: 13px;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     transition: color 0.3s;
+    font-weight: 300;
   }
 
   .blog-post-back:hover {
-    color: var(--text-primary);
+    color: var(--accent);
   }
 
-  .blog-post-tags {
+  .blog-post-meta {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
   }
 
-  .blog-post-tag {
-    font-family: var(--font-body);
-    color: var(--accent-mid);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 400;
-  }
-
-  .blog-post-title {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 5vw, 44px);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 16px;
-    letter-spacing: -0.5px;
-  }
-
-  .blog-post-date {
+  .blog-post-date,
+  .blog-post-reading-time {
     font-family: var(--font-body);
     color: var(--text-dim);
     font-size: 13px;
     font-weight: 300;
   }
 
-  .blog-post-body {
-    max-width: 680px;
+  .blog-post-meta-sep {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .blog-post-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .blog-post-tag {
+    font-family: var(--font-body);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+    background: rgba(200, 245, 66, 0.06);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+
+  .blog-post-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .blog-post-title-bar {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+
+  /*
+   * Content area: grid with body + sidebar.
+   * Body is centered via padding. Sidebar sits to the right.
+   * Key: NO align-items: start — the sidebar cell must stretch
+   * full height of the body so sticky has room to scroll.
+   */
+  .blog-post-content {
+    display: grid;
+    grid-template-columns: 780px 200px;
+    max-width: calc(780px + 48px + 200px);
+    padding-right: 0 48px;
     margin: 0 auto;
-    padding: 60px 48px 80px;
+    /* Shift grid left so the 780px body column is centered on page */
+    transform: translateX(calc((200px + 48px) / 2));
+  }
+
+  /* --- Body (first grid column) --- */
+  .blog-post-body {
+    max-width: 780px;
+    padding: 56px 48px 80px 0;
     color: var(--text-muted);
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 17px;
+    line-height: 1.85;
+    min-width: 0;
   }
 
   .blog-post-body :global(h2) {
     font-family: var(--font-display);
     color: var(--text-primary);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 600;
-    margin: 56px 0 18px;
+    margin: 64px 0 20px;
     letter-spacing: -0.3px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    scroll-margin-top: 100px;
+  }
+
+  .blog-post-body :global(h2:first-child) {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
   }
 
   .blog-post-body :global(h3) {
@@ -204,54 +284,70 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     color: var(--text-primary);
     font-size: 20px;
     font-weight: 600;
-    margin: 40px 0 14px;
+    margin: 44px 0 14px;
   }
 
   .blog-post-body :global(p) {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .blog-post-body :global(p + p) {
+    margin-top: -4px;
   }
 
   .blog-post-body :global(a) {
-    color: var(--accent-start);
-    transition: color 0.2s;
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(200, 245, 66, 0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
   }
 
   .blog-post-body :global(a:hover) {
-    color: var(--accent-end);
+    text-decoration-color: var(--accent);
   }
 
   .blog-post-body :global(code) {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 14px;
+    background: rgba(200, 245, 66, 0.06);
+    border: 1px solid rgba(200, 245, 66, 0.08);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.88em;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    color: var(--accent-light);
   }
 
   .blog-post-body :global(pre) {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
-    border-radius: 14px;
-    padding: 24px;
-    margin: 28px 0;
+    background: rgba(200, 245, 66, 0.02);
+    border: 1px solid rgba(200, 245, 66, 0.06);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
     overflow-x: auto;
   }
 
   .blog-post-body :global(pre code) {
     background: none;
+    border: none;
     padding: 0;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: var(--text-muted);
   }
 
   .blog-post-body :global(ul),
   .blog-post-body :global(ol) {
-    margin: 16px 0;
-    padding-left: 24px;
+    margin: 20px 0;
+    padding-left: 20px;
   }
 
   .blog-post-body :global(li) {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .blog-post-body :global(li::marker) {
+    color: var(--accent);
   }
 
   .blog-post-body :global(strong) {
@@ -259,18 +355,100 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     font-weight: 500;
   }
 
-  .blog-post-body :global(blockquote) {
-    border-left: 2px solid var(--accent-start);
-    padding-left: 20px;
-    margin: 24px 0;
-    color: var(--text-dim);
+  .blog-post-body :global(em) {
+    color: var(--text-primary);
     font-style: italic;
   }
 
+  .blog-post-body :global(blockquote) {
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px;
+    margin: 32px 0;
+    background: rgba(200, 245, 66, 0.02);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .blog-post-body :global(blockquote p) {
+    margin-bottom: 0;
+  }
+
+  .blog-post-body :global(hr) {
+    border: none;
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 48px 0;
+  }
+
+  .blog-post-body :global(img) {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 32px 0;
+  }
+
+  /* --- Sidebar (second grid column, stretches full height) --- */
+  .blog-post-sidebar {
+    padding-top: 56px;
+    padding-left: 48px;
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .sidebar-sticky {
+    position: sticky;
+    top: 96px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .sidebar-toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-toc :global(.toc-link) {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 5px 12px;
+    border-left: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    line-height: 1.4;
+  }
+
+  .sidebar-toc :global(.toc-link:hover) {
+    color: var(--text-primary);
+  }
+
+  .sidebar-toc :global(.toc-link.active) {
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
+  /* --- Footer (centered) --- */
   .blog-post-footer {
-    max-width: 680px;
-    margin: 0 auto;
     padding: 0 48px 80px;
+  }
+
+  .blog-post-footer-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .blog-post-footer-divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin-bottom: 40px;
   }
 
   .blog-post-footer-link {
@@ -286,11 +464,12 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .blog-post-footer-link:hover {
-    border-color: var(--accent-start);
+    border-color: var(--accent);
     color: var(--text-primary);
-    box-shadow: 0 0 20px rgba(129, 140, 248, 0.15);
+    box-shadow: 0 0 20px rgba(200, 245, 66, 0.1);
   }
 
+  /* --- Scroll to top --- */
   .scroll-to-top {
     position: fixed;
     bottom: 32px;
@@ -298,10 +477,9 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(124, 106, 239, 0.1);
-    border: 1px solid rgba(124, 106, 239, 0.2);
-    color: var(--accent-mid);
-    cursor: pointer;
+    background: rgba(200, 245, 66, 0.08);
+    border: 1px solid rgba(200, 245, 66, 0.15);
+    color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -319,26 +497,36 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   }
 
   .scroll-to-top:hover {
-    background: rgba(124, 106, 239, 0.2);
-    border-color: var(--accent-start);
-    box-shadow: 0 0 16px rgba(124, 106, 239, 0.15);
+    background: rgba(200, 245, 66, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(200, 245, 66, 0.1);
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 1200px) {
+    .blog-post-content {
+      grid-template-columns: 1fr;
+      max-width: 780px;
+      transform: none;
+    }
+
+    .blog-post-sidebar {
+      display: none;
+    }
   }
 
   @media (max-width: 768px) {
-    .blog-nav {
-      padding: 20px 24px;
-    }
-
-    .blog-nav-links {
-      display: none;
-    }
-
     .blog-post-header {
-      padding: 60px 24px 40px;
+      padding: 56px 24px 36px;
+    }
+
+    .blog-post-content {
+      padding: 0 24px;
     }
 
     .blog-post-body {
-      padding: 40px 24px 60px;
+      padding: 36px 0 60px;
+      font-size: 16px;
     }
 
     .blog-post-footer {

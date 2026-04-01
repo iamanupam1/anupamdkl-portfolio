@@ -28,12 +28,13 @@ const { title } = Astro.props;
     <noscript>
       <style>
         .hero-gradient, .hero-label, .hero-word, .hero-subtitle, .hero-divider,
-        .scroll-indicator, .project-row, .blog-card, .about-text p,
-        .stat, .contact-link {
+        .project-row, .blog-card, .about-text p,
+        .contact-link {
           opacity: 1 !important;
           transform: none !important;
         }
-        .cursor-dot, .cursor-ring {
+        .cursor-dot, .cursor-ring,
+        .hero-content-reveal, .hero-dot-canvas {
           display: none !important;
         }
       </style>
@@ -50,3 +51,8 @@ const { title } = Astro.props;
 <style is:global>
   @import '../styles/global.css';
 </style>
+
+<script>
+  import { initCursor } from '../scripts/cursor';
+  initCursor();
+</script>

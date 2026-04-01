@@ -9,7 +9,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     gradient: z
       .string()
-      .default('linear-gradient(135deg, rgba(99,102,241,0.3), rgba(168,85,247,0.3))'),
+      .default('linear-gradient(135deg, rgba(200,245,66,0.1), rgba(168,214,32,0.08))'),
     draft: z.boolean().default(false),
   }),
 });

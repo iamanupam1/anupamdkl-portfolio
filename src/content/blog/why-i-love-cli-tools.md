@@ -3,7 +3,7 @@ title: "Why I Love Building CLI Tools"
 summary: "There's something deeply satisfying about a well-crafted command-line interface. Here's why I keep coming back to the terminal."
 date: 2026-02-28
 tags: ["CLI", "Go", "Developer Tools"]
-gradient: "linear-gradient(135deg, rgba(52,211,153,0.3), rgba(59,130,246,0.3))"
+gradient: "linear-gradient(135deg, rgba(200,245,66,0.1), rgba(168,214,32,0.15))"
 ---
 
 I've built web apps, APIs, mobile backends, and data pipelines. But the thing I keep coming back to — the thing that gives me the most creative satisfaction — is building CLI tools.

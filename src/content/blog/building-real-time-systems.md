@@ -3,7 +3,7 @@ title: "Building Real-Time Systems That Scale"
 summary: "Lessons learned from building WebSocket-based collaboration tools that handle thousands of concurrent users."
 date: 2026-03-15
 tags: ["WebSockets", "Architecture", "Node.js"]
-gradient: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(168,85,247,0.3))"
+gradient: "linear-gradient(135deg, rgba(200,245,66,0.15), rgba(168,214,32,0.1))"
 ---
 
 Real-time systems are deceptively simple on the surface. A WebSocket connection, some event handlers, and you're done — right? Not quite. Here's what I learned building collaboration tools that needed to handle thousands of concurrent connections without breaking a sweat.

@@ -24,6 +24,14 @@ import { projects } from '../data/projects';
       />
     ))}
   </div>
+  <div class="projects-footer">
+    <a href="/projects" class="projects-view-all">
+      View all projects
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h10m0 0L9 4m4 4L9 12" />
+      </svg>
+    </a>
+  </div>
 </section>
 
 <style>
@@ -58,6 +66,29 @@ import { projects } from '../data/projects';
     display: flex;
     flex-direction: column;
     gap: 96px;
+  }
+
+  .projects-footer {
+    margin-top: 64px;
+    text-align: center;
+  }
+
+  .projects-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 14px;
+    transition: all 0.3s var(--ease-cinematic);
+  }
+
+  .projects-view-all:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    box-shadow: 0 0 20px rgba(200, 245, 66, 0.15);
   }
 
   @media (max-width: 768px) {

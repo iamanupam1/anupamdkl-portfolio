@@ -3,7 +3,7 @@ title: "Creative Coding as Meditation"
 summary: "How making generative art with code became my favorite way to decompress after a long day of production engineering."
 date: 2026-03-25
 tags: ["Creative Coding", "Canvas", "Generative Art"]
-gradient: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(244,114,182,0.3))"
+gradient: "linear-gradient(135deg, rgba(168,214,32,0.12), rgba(200,245,66,0.08))"
 ---
 
 After eight hours of debugging race conditions or optimizing database queries, the last thing I want to do is write more "serious" code. But somehow, I always end up back at the keyboard — not building features or fixing bugs, but making things that move and glow and shift and breathe.

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
 import BlogCard from '../../components/BlogCard.astro';
 
 const posts = (await getCollection('blog'))
@@ -9,15 +10,7 @@ const posts = (await getCollection('blog'))
 ---
 
 <Layout title="Blog — Anupam">
-  <nav class="blog-nav">
-    <a href="/" class="blog-nav-logo">ANUPAM</a>
-    <div class="blog-nav-links">
-      <a href="/#work" class="blog-nav-link">Work</a>
-      <a href="/#blog" class="blog-nav-link">Blog</a>
-      <a href="/#about" class="blog-nav-link">About</a>
-      <a href="/#contact" class="blog-nav-link">Contact</a>
-    </div>
-  </nav>
+  <Nav solid />
 
   <main class="blog-listing">
     <div class="blog-listing-header">
@@ -27,8 +20,9 @@ const posts = (await getCollection('blog'))
         </svg>
         Home
       </a>
-      <span class="section-label">Blog</span>
-      <h1 class="section-title">All posts</h1>
+      <h1 class="blog-listing-title">Blog</h1>
+      <p class="blog-listing-subtitle">Thoughts on engineering, tooling, and the craft of building software.</p>
+      <div class="blog-listing-bar"></div>
     </div>
     <div class="blog-listing-grid">
       {posts.map((post) => (
@@ -46,109 +40,78 @@ const posts = (await getCollection('blog'))
 </Layout>
 
 <style>
-  .blog-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 48px;
-    background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .blog-nav-logo {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 2px;
-    color: #e2e8f0;
-  }
-
-  .blog-nav-links {
-    display: flex;
-    gap: 32px;
-  }
-
-  .blog-nav-link {
-    color: #94a3b8;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    transition: color 0.3s;
-  }
-
-  .blog-nav-link:hover {
-    color: #e2e8f0;
-  }
-
   .blog-listing {
-    padding: 120px 48px;
-    max-width: 1200px;
+    padding: 120px 48px 80px;
+    max-width: 960px;
     margin: 0 auto;
   }
 
   .blog-listing-header {
-    margin-bottom: 48px;
+    margin-bottom: 56px;
   }
 
   .blog-listing-back {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: #94a3b8;
+    color: var(--text-dim);
     font-size: 13px;
-    margin-bottom: 24px;
+    font-weight: 300;
+    margin-bottom: 32px;
     transition: color 0.3s;
   }
 
   .blog-listing-back:hover {
-    color: #e2e8f0;
+    color: var(--accent);
   }
 
-  .section-label {
-    display: block;
-    color: #6366f1;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+  .blog-listing-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
     margin-bottom: 12px;
   }
 
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 48px;
+  .blog-listing-subtitle {
+    color: var(--text-dim);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 480px;
+  }
+
+  .blog-listing-bar {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
   }
 
   .blog-listing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 
-  /* Entrance animation for listing page cards */
+  /* Entrance animation */
   .blog-listing-grid :global(.blog-card) {
     opacity: 0;
-    animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
-  .blog-listing-grid :global(.blog-card:nth-child(1)) { animation-delay: 0.1s; }
-  .blog-listing-grid :global(.blog-card:nth-child(2)) { animation-delay: 0.2s; }
-  .blog-listing-grid :global(.blog-card:nth-child(3)) { animation-delay: 0.3s; }
-  .blog-listing-grid :global(.blog-card:nth-child(4)) { animation-delay: 0.4s; }
-  .blog-listing-grid :global(.blog-card:nth-child(5)) { animation-delay: 0.5s; }
-  .blog-listing-grid :global(.blog-card:nth-child(6)) { animation-delay: 0.6s; }
+  .blog-listing-grid :global(.blog-card:nth-child(1)) { animation-delay: 0.05s; }
+  .blog-listing-grid :global(.blog-card:nth-child(2)) { animation-delay: 0.12s; }
+  .blog-listing-grid :global(.blog-card:nth-child(3)) { animation-delay: 0.19s; }
+  .blog-listing-grid :global(.blog-card:nth-child(4)) { animation-delay: 0.26s; }
+  .blog-listing-grid :global(.blog-card:nth-child(5)) { animation-delay: 0.33s; }
+  .blog-listing-grid :global(.blog-card:nth-child(6)) { animation-delay: 0.40s; }
 
   @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -157,16 +120,8 @@ const posts = (await getCollection('blog'))
   }
 
   @media (max-width: 768px) {
-    .blog-nav {
-      padding: 20px 24px;
-    }
-
-    .blog-nav-links {
-      display: none;
-    }
-
     .blog-listing {
-      padding: 100px 24px;
+      padding: 100px 24px 60px;
     }
 
     .blog-listing-grid {

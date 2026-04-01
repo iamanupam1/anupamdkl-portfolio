@@ -1,10 +1,17 @@
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo">ANUPAM</a>
+---
+interface Props {
+  solid?: boolean;
+}
+const { solid = false } = Astro.props;
+---
+
+<nav class:list={['nav', { scrolled: solid }]} id="nav">
+  <a href="/" class="nav-logo">ANUPAM</a>
   <div class="nav-links">
-    <a href="#work" class="nav-link">Work</a>
-    <a href="#blog" class="nav-link">Blog</a>
-    <a href="#about" class="nav-link">About</a>
-    <a href="#contact" class="nav-link">Contact</a>
+    <a href="/projects" class="nav-link">Work</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <a href="/#about" class="nav-link">About</a>
+    <a href="/#contact" class="nav-link">Contact</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
     <span></span>
@@ -28,7 +35,7 @@
   }
 
   .nav.scrolled {
-    background: rgba(8, 8, 13, 0.85);
+    background: rgba(9, 9, 11, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-subtle);
@@ -64,7 +71,6 @@
     gap: 5px;
     background: none;
     border: none;
-    cursor: pointer;
     padding: 4px;
   }
 
@@ -88,7 +94,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(10, 10, 15, 0.95);
+      background: rgba(9, 9, 11, 0.95);
       backdrop-filter: blur(20px);
       flex-direction: column;
       align-items: center;
