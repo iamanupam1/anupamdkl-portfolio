@@ -1,4 +1,4 @@
-import { animate, scroll, inView, stagger } from 'motion';
+import { animate, inView, stagger } from 'motion';
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -24,7 +24,7 @@ let dotCtx: CanvasRenderingContext2D | null = null;
 let dots: Dot[] = [];
 let heroMouseX = -1000;
 let heroMouseY = -1000;
-let dotStartTime = 0;
+let _dotStartTime = 0;
 let dotAnimFrame = 0;
 let cachedHeroEl: HTMLElement | null = null;
 let cachedHeroWidth = 0;
@@ -47,9 +47,9 @@ function readAccentColor(): void {
   document.body.removeChild(tempEl);
   const match = computed.match(/(\d+),\s*(\d+),\s*(\d+)/);
   if (match) {
-    dotColorR = parseInt(match[1]);
-    dotColorG = parseInt(match[2]);
-    dotColorB = parseInt(match[3]);
+    dotColorR = parseInt(match[1], 10);
+    dotColorG = parseInt(match[2], 10);
+    dotColorB = parseInt(match[3], 10);
   }
 }
 
@@ -63,8 +63,8 @@ function resizeDotCanvas(): void {
 
   dotCanvas.width = cachedHeroWidth * cachedDpr;
   dotCanvas.height = cachedHeroHeight * cachedDpr;
-  dotCanvas.style.width = cachedHeroWidth + 'px';
-  dotCanvas.style.height = cachedHeroHeight + 'px';
+  dotCanvas.style.width = `${cachedHeroWidth}px`;
+  dotCanvas.style.height = `${cachedHeroHeight}px`;
   dotCtx.setTransform(cachedDpr, 0, 0, cachedDpr, 0, 0);
 
   dots = [];
@@ -143,7 +143,7 @@ function initDotGrid(): void {
 
   cachedHeroEl = document.getElementById('hero');
   readAccentColor();
-  dotStartTime = performance.now();
+  _dotStartTime = performance.now();
   resizeDotCanvas();
   window.addEventListener('resize', resizeDotCanvas);
   dotAnimFrame = requestAnimationFrame(drawDots);
@@ -188,29 +188,26 @@ export function initHeroAnimations(): void {
   // Staggered entrance
   animate('.hero-gradient', { opacity: [0, 1] }, { duration: 0.5 });
 
-  animate('.hero-label',
-    { opacity: [0, 1], y: [20, 0] },
-    { duration: 0.6, delay: 0.3, type: 'spring', bounce: 0.2 }
-  );
+  animate('.hero-label', { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, delay: 0.3, type: 'spring', bounce: 0.2 });
 
-  animate('.hero-word',
+  animate(
+    '.hero-word',
     { opacity: [0, 1], y: [30, 0] },
-    { duration: 0.6, delay: stagger(0.12, { startDelay: 0.5 }), type: 'spring', bounce: 0.2 }
+    { duration: 0.6, delay: stagger(0.12, { startDelay: 0.5 }), type: 'spring', bounce: 0.2 },
   );
 
-  animate('.hero-divider',
-    { transform: ['scaleX(0)', 'scaleX(1)'] },
-    { duration: 0.6, delay: 0.9 }
-  );
+  animate('.hero-divider', { transform: ['scaleX(0)', 'scaleX(1)'] }, { duration: 0.6, delay: 0.9 });
 
-  animate('.hero-subtitle',
+  animate(
+    '.hero-subtitle',
     { opacity: [0, 1], y: [15, 0] },
-    { duration: 0.6, delay: 1.1, type: 'spring', bounce: 0.2 }
+    { duration: 0.6, delay: 1.1, type: 'spring', bounce: 0.2 },
   );
 
-  animate('.nav-logo, .nav-link',
+  animate(
+    '.nav-logo, .nav-link',
     { opacity: [0, 1], x: [10, 0] },
-    { duration: 0.4, delay: stagger(0.08, { startDelay: 1.0 }) }
+    { duration: 0.4, delay: stagger(0.08, { startDelay: 1.0 }) },
   );
 
   // Mouse-reactive gradient orbs + light cone + dot grid tracking
@@ -228,8 +225,8 @@ export function initHeroAnimations(): void {
     if (orb2) orb2.style.transform = `translate(${normX * -100}px, ${normY * -80}px)`;
     if (orb3) orb3.style.transform = `translate(${normX * 80}px, ${normY * 60}px)`;
 
-    hero.style.setProperty('--mx', localX + 'px');
-    hero.style.setProperty('--my', (e.clientY - hero.getBoundingClientRect().top) + 'px');
+    hero.style.setProperty('--mx', `${localX}px`);
+    hero.style.setProperty('--my', `${e.clientY - hero.getBoundingClientRect().top}px`);
 
     heroMouseX = localX;
     heroMouseY = e.clientY - hero.getBoundingClientRect().top;
@@ -276,7 +273,7 @@ export function initHeroAnimations(): void {
           subtitle.style.opacity = '1';
           if (reveal) reveal.style.opacity = '1';
         } else {
-          const ease = 1 - Math.pow(1 - progress, 3);
+          const ease = 1 - (1 - progress) ** 3;
           const fadeStr = String(1 - ease);
 
           label.style.transform = `translateY(${-200 * ease}px)`;
@@ -306,12 +303,16 @@ export function initNavScroll(): void {
   const nav = document.getElementById('nav');
   if (!nav) return;
 
-  inView('.hero', () => {
-    nav.classList.remove('scrolled');
-    return () => {
-      nav.classList.add('scrolled');
-    };
-  }, { amount: 0 });
+  inView(
+    '.hero',
+    () => {
+      nav.classList.remove('scrolled');
+      return () => {
+        nav.classList.add('scrolled');
+      };
+    },
+    { amount: 0 },
+  );
 }
 
 export function initProjectsAnimations(): void {
@@ -323,28 +324,30 @@ export function initProjectsAnimations(): void {
   document.querySelectorAll('.project-row').forEach((row) => {
     const isReversed = row.classList.contains('project-row--reversed');
 
-    inView(row, () => {
-      const image = row.querySelector('.project-image') as HTMLElement;
-      const details = row.querySelector('.project-details') as HTMLElement;
+    inView(
+      row,
+      () => {
+        const image = row.querySelector('.project-image') as HTMLElement;
+        const details = row.querySelector('.project-details') as HTMLElement;
 
-      animate(row, { opacity: [0, 1] }, { duration: 0.3 });
+        animate(row, { opacity: [0, 1] }, { duration: 0.3 });
 
-      const imageX = isReversed ? 60 : -60;
-      if (image) {
-        animate(image,
-          { opacity: [0, 1], x: [imageX, 0] },
-          { duration: 0.7, type: 'spring', bounce: 0.15 }
-        );
-      }
+        const imageX = isReversed ? 60 : -60;
+        if (image) {
+          animate(image, { opacity: [0, 1], x: [imageX, 0] }, { duration: 0.7, type: 'spring', bounce: 0.15 });
+        }
 
-      const detailsX = isReversed ? -40 : 40;
-      if (details) {
-        animate(details,
-          { opacity: [0, 1], x: [detailsX, 0] },
-          { duration: 0.7, delay: 0.1, type: 'spring', bounce: 0.15 }
-        );
-      }
-    }, { amount: 0.2 });
+        const detailsX = isReversed ? -40 : 40;
+        if (details) {
+          animate(
+            details,
+            { opacity: [0, 1], x: [detailsX, 0] },
+            { duration: 0.7, delay: 0.1, type: 'spring', bounce: 0.15 },
+          );
+        }
+      },
+      { amount: 0.2 },
+    );
   });
 }
 
@@ -354,12 +357,17 @@ export function initAboutAnimations(): void {
     return;
   }
 
-  inView('.about-grid', () => {
-    animate('.about-text p',
-      { opacity: [0, 1], y: [25, 0] },
-      { duration: 0.6, delay: stagger(0.15), type: 'spring', bounce: 0.2 }
-    );
-  }, { amount: 0.2 });
+  inView(
+    '.about-grid',
+    () => {
+      animate(
+        '.about-text p',
+        { opacity: [0, 1], y: [25, 0] },
+        { duration: 0.6, delay: stagger(0.15), type: 'spring', bounce: 0.2 },
+      );
+    },
+    { amount: 0.2 },
+  );
 }
 
 export function initBlogAnimations(): void {
@@ -368,12 +376,17 @@ export function initBlogAnimations(): void {
     return;
   }
 
-  inView('.blog-grid', () => {
-    animate('.blog-card',
-      { opacity: [0, 1], y: [30, 0] },
-      { duration: 0.6, delay: stagger(0.12), type: 'spring', bounce: 0.2 }
-    );
-  }, { amount: 0.1 });
+  inView(
+    '.blog-grid',
+    () => {
+      animate(
+        '.blog-card',
+        { opacity: [0, 1], y: [30, 0] },
+        { duration: 0.6, delay: stagger(0.12), type: 'spring', bounce: 0.2 },
+      );
+    },
+    { amount: 0.1 },
+  );
 }
 
 export function initContactAnimations(): void {
@@ -382,10 +395,15 @@ export function initContactAnimations(): void {
     return;
   }
 
-  inView('.contact-links', () => {
-    animate('.contact-link',
-      { opacity: [0, 1], y: [15, 0] },
-      { duration: 0.4, delay: stagger(0.08), type: 'spring', bounce: 0.2 }
-    );
-  }, { amount: 0.5 });
+  inView(
+    '.contact-links',
+    () => {
+      animate(
+        '.contact-link',
+        { opacity: [0, 1], y: [15, 0] },
+        { duration: 0.4, delay: stagger(0.08), type: 'spring', bounce: 0.2 },
+      );
+    },
+    { amount: 0.5 },
+  );
 }

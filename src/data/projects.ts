@@ -20,8 +20,6 @@ export const projects: Project[] = [
       'Built a real-time collaboration platform using WebSockets for instant syncing across users. Designed the frontend with React and the backend with Node.js, handling thousands of concurrent connections with graceful degradation.',
     techStack: ['React', 'Node.js', 'WebSockets', 'PostgreSQL'],
     gradient: 'var(--project-gradient-1)',
-    liveUrl: '#',
-    githubUrl: '#',
   },
   {
     id: 'dataflow-engine',
@@ -32,7 +30,6 @@ export const projects: Project[] = [
       'Engineered a data pipeline processing millions of events per second. Built custom serialization for throughput optimization and implemented backpressure mechanisms to handle traffic spikes without data loss.',
     techStack: ['Python', 'Kafka', 'Redis', 'AWS'],
     gradient: 'var(--project-gradient-2)',
-    githubUrl: '#',
   },
   {
     id: 'devkit-cli',
@@ -43,7 +40,5 @@ export const projects: Project[] = [
       'Created a CLI tool that automates repetitive developer tasks — scaffolding, linting setup, deployment configs. Designed a plugin architecture so the community can extend it. Used by thousands of developers.',
     techStack: ['Go', 'CLI', 'GitHub Actions'],
     gradient: 'var(--project-gradient-3)',
-    liveUrl: '#',
-    githubUrl: '#',
   },
 ];

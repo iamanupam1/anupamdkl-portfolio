@@ -51,7 +51,7 @@
   --selection-bg: rgba(200, 245, 66, 0.25);
   --selection-color: #000;
   --preview-label: rgba(255, 255, 255, 0.15);
-  --cursor-dot: #ededec;
+
   --noise-opacity: 0.04;
   --project-gradient-1: linear-gradient(135deg, #0d0e08 0%, #161a0c 40%, #1e2410 100%);
   --project-gradient-2: linear-gradient(135deg, #0a0c06 0%, #12150a 40%, #1a1e10 100%);
@@ -90,7 +90,7 @@
   --selection-bg: rgba(74, 122, 16, 0.2);
   --selection-color: #1a1a1a;
   --preview-label: rgba(0, 0, 0, 0.15);
-  --cursor-dot: #1a1a1a;
+
   --noise-opacity: 0.02;
   --project-gradient-1: linear-gradient(135deg, #e8eee0 0%, #dde6d0 40%, #d0dcc2 100%);
   --project-gradient-2: linear-gradient(135deg, #eaf0e2 0%, #dfe8d4 40%, #d4dfc6 100%);
@@ -109,55 +109,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom cursor — hidden on touch devices */
-@media (pointer: fine) {
-  body,
-  a, button, [role="button"], input, textarea, select {
-    cursor: none;
-  }
-}
-
-.cursor-dot {
-  display: none;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  border: 1.5px solid var(--accent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  will-change: transform;
-  transition: width 0.25s var(--ease-cinematic),
-              height 0.25s var(--ease-cinematic),
-              border-width 0.15s,
-              opacity 0.15s;
-  transform: translate(-100px, -100px);
-}
-
-.cursor-ring.hovering {
-  width: 48px;
-  height: 48px;
-  border-width: 2px;
-}
-
-.cursor-ring.clicking {
-  width: 18px;
-  height: 18px;
-  border-width: 2.5px;
-}
-
-/* Hide cursor elements on touch devices */
-@media (pointer: coarse) {
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
-  }
-}
 
 a {
   color: inherit;

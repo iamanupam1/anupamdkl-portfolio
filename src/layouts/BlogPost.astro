@@ -6,9 +6,10 @@ interface Props {
   title: string;
   date: Date;
   tags: string[];
+  summary?: string;
 }
 
-const { title, date, tags } = Astro.props;
+const { title, date, tags, summary } = Astro.props;
 
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: 'long',
@@ -17,14 +18,27 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 }).format(date);
 ---
 
-<Layout title={`${title} — Anupam`}>
+<Layout title={`${title} — Anupam`} description={summary} ogType="article">
   <Nav solid />
+
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "datePublished": date.toISOString(),
+    "description": summary || '',
+    "author": {
+      "@type": "Person",
+      "name": "Anupam",
+      "url": "https://anupamdhakal.com.np"
+    }
+  })} />
 
   <article class="blog-post" id="main-content">
     <header class="blog-post-header">
       <div class="blog-post-header-inner">
         <a href="/blog" class="blog-post-back">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
           </svg>
           All posts
@@ -62,7 +76,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
       <div class="blog-post-footer-inner">
         <div class="blog-post-footer-divider"></div>
         <a href="/blog" class="blog-post-footer-link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
           </svg>
           Back to all posts
@@ -72,7 +86,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   </article>
 
   <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
-    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M8 14V2m0 0L4 6m4-4l4 4" />
     </svg>
   </button>

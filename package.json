@@ -7,10 +7,25 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky",
+    "lint": "biome check --write .",
+    "format": "biome format --write .",
+    "lint:check": "biome check ."
+  },
+  "lint-staged": {
+    "*.{js,ts,json,mjs}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
     "astro": "^4.0.0",
     "motion": "^12.38.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
   }
 }

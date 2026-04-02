@@ -3,9 +3,12 @@ import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
   title: string;
+  description?: string;
+  ogType?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = 'Portfolio of Anupam — Full-Stack Software Engineer', ogType = 'website' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://anupam.dev').href;
 ---
 
 <!doctype html>
@@ -14,29 +17,64 @@ const { title } = Astro.props;
     <ViewTransitions />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of Anupam — Full-Stack Software Engineer" />
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-inline';
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+               font-src 'self' https://fonts.gstatic.com;
+               img-src 'self' data:;
+               connect-src 'self';
+               frame-ancestors 'none';
+               base-uri 'self';
+               form-action 'self';" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content="Portfolio of Anupam — Full-Stack Software Engineer" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content="Portfolio of Anupam — Full-Stack Software Engineer" />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
     <title>{title}</title>
+    <script is:inline type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Anupam — Software Engineer",
+          "url": "https://anupam.dev"
+        },
+        {
+          "@type": "Person",
+          "name": "Anupam",
+          "jobTitle": "Full-Stack Software Engineer",
+          "url": "https://anupam.dev",
+          "sameAs": [
+            "https://github.com/anupam",
+            "https://linkedin.com/in/anupam"
+          ]
+        }
+      ]
+    }
+    </script>
     <!-- Prevent flash: set theme before render -->
     <script is:inline>
       (function() {
-        const stored = localStorage.getItem('theme');
+        var stored = localStorage.getItem('theme');
         if (stored) {
           document.documentElement.dataset.theme = stored;
         } else {
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = prefersDark ? 'dark' : 'light';
+          document.documentElement.dataset.theme = theme;
+          localStorage.setItem('theme', theme);
         }
       })();
     </script>
@@ -48,7 +86,6 @@ const { title } = Astro.props;
           opacity: 1 !important;
           transform: none !important;
         }
-        .cursor-dot, .cursor-ring,
         .hero-content-reveal, .hero-dot-canvas {
           display: none !important;
         }
@@ -57,8 +94,6 @@ const { title } = Astro.props;
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
     <slot />
   </body>
 </html>
@@ -68,25 +103,33 @@ const { title } = Astro.props;
 </style>
 
 <script>
-  import { initCursor } from '../scripts/cursor';
   import { updateDotColors } from '../scripts/animations';
+
+  function handleThemeClick() {
+    const current = document.documentElement.dataset.theme;
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    updateDotColors();
+  }
 
   function initThemeToggle() {
     const toggle = document.getElementById('theme-toggle');
     if (toggle) {
-      toggle.addEventListener('click', () => {
-        const current = document.documentElement.dataset.theme;
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.dataset.theme = next;
-        localStorage.setItem('theme', next);
-        // Update dot grid colors for new theme
-        updateDotColors();
-      });
+      toggle.removeEventListener('click', handleThemeClick);
+      toggle.addEventListener('click', handleThemeClick);
     }
   }
 
   initThemeToggle();
-  initCursor();
+
+  // Preserve theme across View Transition swaps
+  document.addEventListener('astro:before-swap', (e: any) => {
+    const theme = document.documentElement.dataset.theme;
+    if (theme && e.newDocument) {
+      e.newDocument.documentElement.dataset.theme = theme;
+    }
+  });
 
   // Re-bind theme toggle after View Transition page swaps
   document.addEventListener('astro:after-swap', initThemeToggle);

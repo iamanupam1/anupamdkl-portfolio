@@ -10,7 +10,7 @@ import { projects } from '../data/projects';
   <main class="projects-listing" id="main-content">
     <div class="projects-listing-header">
       <a href="/" class="projects-listing-back">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M13 8H3m0 0l4-4m-4 4l4 4" />
         </svg>
         Home
@@ -38,7 +38,7 @@ import { projects } from '../data/projects';
               {project.liveUrl && (
                 <a href={project.liveUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   Live Demo
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 3h8v8m0-8L5 11" />
                   </svg>
                 </a>
@@ -46,7 +46,7 @@ import { projects } from '../data/projects';
               {project.githubUrl && (
                 <a href={project.githubUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   GitHub
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 3h8v8m0-8L5 11" />
                   </svg>
                 </a>

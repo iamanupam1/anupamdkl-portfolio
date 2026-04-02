@@ -17,7 +17,8 @@ export function initCursor(): void {
   let isHovering = false;
 
   const interactiveSelector = 'a, button, [role="button"], .project-row';
-  const textInputSelector = 'input[type="text"], input[type="email"], input[type="search"], input[type="url"], input[type="password"], textarea, [contenteditable="true"]';
+  const textInputSelector =
+    'input[type="text"], input[type="email"], input[type="search"], input[type="url"], input[type="password"], textarea, [contenteditable="true"]';
 
   function show(): void {
     if (isVisible) return;
@@ -31,7 +32,12 @@ export function initCursor(): void {
     ring.style.opacity = '0';
   }
 
+  let lastMoveTime = 0;
   document.addEventListener('mousemove', (e) => {
+    const now = performance.now();
+    if (now - lastMoveTime < 16) return;
+    lastMoveTime = now;
+
     mouseX = e.clientX;
     mouseY = e.clientY;
 
@@ -67,7 +73,7 @@ export function initCursor(): void {
 
     if (target.closest(interactiveSelector)) {
       const related = e.relatedTarget as HTMLElement | null;
-      if (!related || !related.closest(interactiveSelector)) {
+      if (!related?.closest(interactiveSelector)) {
         isHovering = false;
         ring.classList.remove('hovering');
       }
