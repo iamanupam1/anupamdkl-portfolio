@@ -116,4 +116,23 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   .blog-card:hover .blog-card-read {
     color: var(--accent);
   }
+
+  @media (max-width: 768px) {
+    .blog-card {
+      padding: 24px;
+    }
+
+    .blog-card-meta {
+      flex-wrap: wrap;
+      white-space: normal;
+    }
+
+    .blog-card-title {
+      font-size: 18px;
+    }
+
+    .blog-card-summary {
+      font-size: 13px;
+    }
+  }
 </style>

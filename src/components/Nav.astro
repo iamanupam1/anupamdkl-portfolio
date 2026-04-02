@@ -165,15 +165,22 @@ const { solid = false } = Astro.props;
 </style>
 
 <script>
-  const hamburger = document.getElementById('nav-hamburger');
-  const navLinks = document.querySelector('.nav-links');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => { navLinks.classList.toggle('open'); });
-    // Close menu when a link is clicked
-    navLinks.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => { navLinks.classList.remove('open'); });
-    });
+  function initHamburger() {
+    const hamburger = document.getElementById('nav-hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => { navLinks.classList.toggle('open'); });
+      navLinks.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => { navLinks.classList.remove('open'); });
+      });
+    }
   }
+
+  initHamburger();
+
+  // Re-bind after View Transition swaps
+  document.addEventListener('astro:after-swap', initHamburger);
+
   // Close menu on View Transition navigation
   document.addEventListener('astro:before-swap', () => {
     const links = document.querySelector('.nav-links');
