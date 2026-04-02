@@ -13,7 +13,7 @@ const icons: Record<string, string> = {
 
 <footer class="contact-section" id="contact">
   <div class="contact-links">
-    {social?.map((link) => (
+    {social?.filter((link) => link.url).map((link) => (
       <a href={link.url} class="contact-link" aria-label={link.ariaLabel} target="_blank" rel="noopener noreferrer">
         <Fragment set:html={icons[link.platform] || ''} />
         {link.label}

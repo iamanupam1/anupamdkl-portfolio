@@ -8,6 +8,7 @@ const posts = (await getCollection('blog'))
   .slice(0, 3);
 ---
 
+{posts.length > 0 && (
 <div class="blog-block">
   <span class="section-label">Thoughts & explorations</span>
   <div class="blog-grid">
@@ -31,6 +32,7 @@ const posts = (await getCollection('blog'))
     </a>
   </div>
 </div>
+)}
 
 <style>
   .blog-block {

@@ -27,6 +27,9 @@ const posts = (await getCollection('blog'))
       <div class="blog-listing-bar"></div>
     </div>
     <div class="blog-listing-grid">
+      {posts.length === 0 && (
+        <p class="blog-empty">No posts yet. Check back soon.</p>
+      )}
       {posts.map((post) => (
         <BlogCard
           slug={post.slug}
@@ -129,5 +132,13 @@ const posts = (await getCollection('blog'))
     .blog-listing-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .blog-empty {
+    color: var(--text-dim);
+    font-size: 16px;
+    text-align: center;
+    padding: 48px 0;
+    grid-column: 1 / -1;
   }
 </style>
