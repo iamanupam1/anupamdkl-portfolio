@@ -1,6 +1,9 @@
 ---
 import Layout from './Layout.astro';
 import Nav from '../components/Nav.astro';
+import { getSiteInfo } from '../lib/content';
+
+const site = await getSiteInfo();
 
 interface Props {
   title: string;
@@ -18,7 +21,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 }).format(date);
 ---
 
-<Layout title={`${title} — Anupam`} description={summary} ogType="article">
+<Layout title={`${title} — ${site.name}`} description={summary} ogType="article">
   <Nav solid />
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify({
@@ -29,8 +32,8 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     "description": summary || '',
     "author": {
       "@type": "Person",
-      "name": "Anupam",
-      "url": "https://anupamdhakal.com.np"
+      "name": site.name,
+      "url": site.siteUrl
     }
   })} />
 

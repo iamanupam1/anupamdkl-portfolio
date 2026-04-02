@@ -1,10 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
-import { projects } from '../data/projects';
+import { getProjects, getSiteInfo } from '../lib/content';
+
+const projects = await getProjects();
+const site = await getSiteInfo();
 ---
 
-<Layout title="Projects — Anupam">
+<Layout title={`Projects — ${site.name}`}>
   <Nav solid />
 
   <main class="projects-listing" id="main-content">
@@ -24,27 +27,27 @@ import { projects } from '../data/projects';
       {projects.map((project) => (
         <article class="project-card">
           <div class="project-card-header">
-            <span class="project-card-tag">{project.tag}</span>
-            <h2 class="project-card-title">{project.title}</h2>
-            <p class="project-card-desc">{project.description}</p>
+            <span class="project-card-tag">{project.data.tag}</span>
+            <h2 class="project-card-title">{project.data.title}</h2>
+            <p class="project-card-desc">{project.body}</p>
           </div>
           <div class="project-card-footer">
             <div class="project-card-tech">
-              {project.techStack.map((tech) => (
+              {project.data.techStack.map((tech) => (
                 <span class="project-card-pill">{tech}</span>
               ))}
             </div>
             <div class="project-card-links">
-              {project.liveUrl && (
-                <a href={project.liveUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
+              {project.data.liveUrl && (
+                <a href={project.data.liveUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   Live Demo
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 3h8v8m0-8L5 11" />
                   </svg>
                 </a>
               )}
-              {project.githubUrl && (
-                <a href={project.githubUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
+              {project.data.githubUrl && (
+                <a href={project.data.githubUrl} class="project-card-link" target="_blank" rel="noopener noreferrer">
                   GitHub
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 3h8v8m0-8L5 11" />

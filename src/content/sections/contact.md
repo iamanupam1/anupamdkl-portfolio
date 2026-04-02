@@ -1,0 +1,20 @@
+---
+footerText: "Designed with intention. Built with care."
+social:
+  - platform: "email"
+    label: "Email"
+    url: "mailto:hello@anupam.dev"
+    ariaLabel: "Send email to hello@anupam.dev"
+  - platform: "github"
+    label: "GitHub"
+    url: "https://github.com/anupam"
+    ariaLabel: "View GitHub profile"
+  - platform: "linkedin"
+    label: "LinkedIn"
+    url: "https://linkedin.com/in/anupam"
+    ariaLabel: "View LinkedIn profile"
+  - platform: "twitter"
+    label: "X"
+    url: "https://twitter.com/anupam"
+    ariaLabel: "View X (Twitter) profile"
+---

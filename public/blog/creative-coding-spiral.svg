@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#0a0a09" rx="12"/>
+  <g transform="translate(200,150)">
+    <circle cx="0" cy="0" r="2" fill="hsl(0,70%,60%)" opacity="0.8"/>
+    <circle cx="7.9" cy="0.8" r="2" fill="hsl(3.6,70%,60%)" opacity="0.8"/>
+    <circle cx="14.9" cy="4.7" r="2" fill="hsl(7.2,70%,60%)" opacity="0.8"/>
+    <circle cx="19.2" cy="11.8" r="2" fill="hsl(10.8,70%,60%)" opacity="0.8"/>
+    <circle cx="19.4" cy="20.8" r="2" fill="hsl(14.4,70%,60%)" opacity="0.8"/>
+    <circle cx="14.9" cy="29.6" r="2" fill="hsl(18,70%,60%)" opacity="0.8"/>
+    <circle cx="6.5" cy="35.9" r="2" fill="hsl(21.6,70%,60%)" opacity="0.8"/>
+    <circle cx="-4.6" cy="37.8" r="2" fill="hsl(25.2,70%,60%)" opacity="0.8"/>
+    <circle cx="-16.2" cy="34.0" r="2" fill="hsl(28.8,70%,60%)" opacity="0.8"/>
+    <circle cx="-25.2" cy="24.8" r="2" fill="hsl(32.4,70%,60%)" opacity="0.8"/>
+    <circle cx="-28.9" cy="12.0" r="2" fill="hsl(36,70%,60%)" opacity="0.8"/>
+    <circle cx="-25.7" cy="-2.5" r="2" fill="hsl(39.6,70%,60%)" opacity="0.8"/>
+    <circle cx="-16.0" cy="-15.2" r="2" fill="hsl(43.2,70%,60%)" opacity="0.8"/>
+    <circle cx="-1.7" cy="-22.8" r="2" fill="hsl(46.8,70%,60%)" opacity="0.8"/>
+    <circle cx="14.4" cy="-22.8" r="2" fill="hsl(50.4,70%,60%)" opacity="0.8"/>
+    <circle cx="28.4" cy="-15.0" r="2" fill="hsl(54,70%,60%)" opacity="0.8"/>
+    <circle cx="36.6" cy="-1.4" r="2" fill="hsl(57.6,70%,60%)" opacity="0.8"/>
+    <circle cx="36.6" cy="14.7" r="2" fill="hsl(61.2,70%,60%)" opacity="0.8"/>
+    <circle cx="28.3" cy="29.1" r="2" fill="hsl(64.8,70%,60%)" opacity="0.8"/>
+    <circle cx="13.8" cy="38.0" r="2" fill="hsl(68.4,70%,60%)" opacity="0.8"/>
+    <circle cx="-4.1" cy="39.0" r="2" fill="hsl(72,70%,60%)" opacity="0.8"/>
+    <circle cx="-21.4" cy="31.2" r="2.5" fill="hsl(75.6,70%,60%)" opacity="0.8"/>
+    <circle cx="-33.6" cy="16.6" r="2.5" fill="hsl(79.2,70%,60%)" opacity="0.8"/>
+    <circle cx="-37.6" cy="-2.0" r="2.5" fill="hsl(82.8,70%,60%)" opacity="0.8"/>
+    <circle cx="-32.5" cy="-20.0" r="2.5" fill="hsl(86.4,70%,60%)" opacity="0.8"/>
+    <circle cx="-19.7" cy="-33.4" r="2.5" fill="hsl(90,70%,60%)" opacity="0.8"/>
+    <circle cx="-2.3" cy="-39.4" r="2.5" fill="hsl(93.6,70%,60%)" opacity="0.8"/>
+    <circle cx="16.5" cy="-36.4" r="2.5" fill="hsl(97.2,70%,60%)" opacity="0.8"/>
+    <circle cx="32.2" cy="-25.0" r="2.5" fill="hsl(100.8,70%,60%)" opacity="0.8"/>
+    <circle cx="40.8" cy="-8.1" r="2.5" fill="hsl(104.4,70%,60%)" opacity="0.8"/>
+  </g>
+  <text x="200" y="280" text-anchor="middle" fill="#5c5c56" font-family="monospace" font-size="11">generative spiral — 30 dots, Math.cos/sin</text>
+</svg>

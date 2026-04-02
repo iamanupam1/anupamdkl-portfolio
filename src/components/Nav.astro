@@ -1,4 +1,7 @@
 ---
+import { getSiteInfo } from '../lib/content';
+const site = await getSiteInfo();
+
 interface Props {
   solid?: boolean;
 }
@@ -6,7 +9,7 @@ const { solid = false } = Astro.props;
 ---
 
 <nav class:list={['nav', { scrolled: solid }]} id="nav">
-  <a href="/" class="nav-logo">anupamdkl</a>
+  <a href="/" class="nav-logo">{site.handle}</a>
   <div class="nav-links">
     <a href="/" class="nav-link">home</a>
     <a href="/projects" class="nav-link">work</a>

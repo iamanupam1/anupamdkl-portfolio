@@ -1,5 +1,8 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import { getSiteInfo } from '../lib/content';
+
+const site = await getSiteInfo();
 
 interface Props {
   title: string;
@@ -7,8 +10,8 @@ interface Props {
   ogType?: string;
 }
 
-const { title, description = 'Portfolio of Anupam — Full-Stack Software Engineer', ogType = 'website' } = Astro.props;
-const canonicalUrl = new URL(Astro.url.pathname, 'https://anupam.dev').href;
+const { title, description = `Portfolio of ${site.name} — ${site.jobTitle}`, ogType = 'website' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, site.siteUrl || 'https://anupam.dev').href;
 ---
 
 <!doctype html>
@@ -42,28 +45,22 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://anupam.dev').href;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
     <title>{title}</title>
-    <script is:inline type="application/ld+json">
-    {
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "WebSite",
-          "name": "Anupam — Software Engineer",
-          "url": "https://anupam.dev"
+          "name": `${site.name} — Software Engineer`,
+          "url": site.siteUrl
         },
         {
           "@type": "Person",
-          "name": "Anupam",
-          "jobTitle": "Full-Stack Software Engineer",
-          "url": "https://anupam.dev",
-          "sameAs": [
-            "https://github.com/anupam",
-            "https://linkedin.com/in/anupam"
-          ]
+          "name": site.name,
+          "jobTitle": site.jobTitle,
+          "url": site.siteUrl
         }
       ]
-    }
-    </script>
+    })} />
     <!-- Prevent flash: set theme before render -->
     <script is:inline>
       (function() {

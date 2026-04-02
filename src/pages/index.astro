@@ -6,9 +6,12 @@ import Projects from '../components/Projects.astro';
 import About from '../components/About.astro';
 import Blog from '../components/Blog.astro';
 import Contact from '../components/Contact.astro';
+import { getSiteInfo } from '../lib/content';
+
+const site = await getSiteInfo();
 ---
 
-<Layout title="Anupam — Software Engineer">
+<Layout title={`${site.name} — Software Engineer`}>
   <Nav />
   <main id="main-content">
     <Hero />

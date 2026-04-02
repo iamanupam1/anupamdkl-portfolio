@@ -1,3 +1,9 @@
+---
+import { getSection } from '../lib/content';
+const hero = await getSection('hero');
+const { label, titleLine1, titleAccent, subtitle } = hero.data;
+---
+
 <section class="hero" id="hero">
   <div class="hero-gradient">
     <div class="gradient-orb gradient-orb-1" id="gradient-orb-1"></div>
@@ -9,23 +15,23 @@
   <div class="hero-noise"></div>
 
   <div class="hero-content" id="hero-content">
-    <div class="hero-label" id="hero-label">Full-Stack Engineer</div>
+    <div class="hero-label" id="hero-label">{label}</div>
     <h1 class="hero-title">
-      <span class="hero-word" id="hero-line1">Building digital</span><br />
-      <span class="hero-word hero-accent" id="hero-accent">experiences</span>
+      <span class="hero-word" id="hero-line1">{titleLine1}</span><br />
+      <span class="hero-word hero-accent" id="hero-accent">{titleAccent}</span>
     </h1>
     <div class="hero-divider" id="hero-divider"></div>
-    <p class="hero-subtitle" id="hero-subtitle">Crafting code that feels alive</p>
+    <p class="hero-subtitle" id="hero-subtitle">{subtitle}</p>
   </div>
 
   <div class="hero-content-reveal" id="hero-reveal">
-    <div class="hero-label">Full-Stack Engineer</div>
+    <div class="hero-label">{label}</div>
     <h1 class="hero-title">
-      <span class="hero-word">Building digital</span><br />
-      <span class="hero-word hero-accent">experiences</span>
+      <span class="hero-word">{titleLine1}</span><br />
+      <span class="hero-word hero-accent">{titleAccent}</span>
     </h1>
     <div class="hero-divider" style="transform: scaleX(1);"></div>
-    <p class="hero-subtitle">Crafting code that feels alive</p>
+    <p class="hero-subtitle">{subtitle}</p>
   </div>
 </section>
 

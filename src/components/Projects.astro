@@ -1,6 +1,7 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import { projects } from '../data/projects';
+import { getProjects } from '../lib/content';
+const projects = await getProjects();
 ---
 
 <section class="projects-section" id="work">
@@ -12,14 +13,14 @@ import { projects } from '../data/projects';
     {projects.map((project, index) => (
       <ProjectCard
         id={project.id}
-        tag={project.tag}
-        title={project.title}
-        summary={project.summary}
-        description={project.description}
-        techStack={project.techStack}
-        gradient={project.gradient}
-        liveUrl={project.liveUrl}
-        githubUrl={project.githubUrl}
+        tag={project.data.tag}
+        title={project.data.title}
+        summary={project.data.summary}
+        description={project.body}
+        techStack={project.data.techStack}
+        gradient={project.data.gradient}
+        liveUrl={project.data.liveUrl}
+        githubUrl={project.data.githubUrl}
         index={index}
       />
     ))}

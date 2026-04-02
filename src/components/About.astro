@@ -1,10 +1,15 @@
+---
+import { getSection } from '../lib/content';
+const about = await getSection('about');
+const { Content } = await about.render();
+---
+
 <div class="about-block">
-  <span class="section-label">About</span>
-  <h2 class="section-title">A bit about me</h2>
+  <span class="section-label">{about.data.label}</span>
+  <h2 class="section-title">{about.data.title}</h2>
   <div class="about-grid">
     <div class="about-text">
-      <p>I'm a full-stack engineer who believes great software is equal parts engineering and artistry. I care deeply about the details — from pixel-perfect interfaces to well-architected backends.</p>
-      <p>When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with creative coding.</p>
+      <Content />
     </div>
   </div>
 </div>

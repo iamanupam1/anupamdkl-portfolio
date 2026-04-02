@@ -3,13 +3,15 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import BlogCard from '../../components/BlogCard.astro';
+import { getSiteInfo } from '../../lib/content';
 
+const site = await getSiteInfo();
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<Layout title="Blog — Anupam">
+<Layout title={`Blog — ${site.name}`}>
   <Nav solid />
 
   <main class="blog-listing" id="main-content">

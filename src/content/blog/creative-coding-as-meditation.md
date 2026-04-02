@@ -26,6 +26,8 @@ for (let i = 0; i < 200; i++) {
 
 Thirty seconds of code, and you've got a spiral of colored dots. Tweak one number and it becomes something completely different. It's immediate, visual, and endlessly surprising.
 
+![Generative spiral — 30 dots arranged using Math.cos and Math.sin](/blog/creative-coding-spiral.svg)
+
 ## The Meditative State
 
 There's a specific mental state I enter when creative coding. It's similar to what musicians describe when improvising — a flow state where you're not thinking about the code, you're thinking *through* it.
