@@ -145,6 +145,7 @@ function initDotGrid(): void {
   readAccentColor();
   _dotStartTime = performance.now();
   resizeDotCanvas();
+  window.removeEventListener('resize', resizeDotCanvas);
   window.addEventListener('resize', resizeDotCanvas);
   dotAnimFrame = requestAnimationFrame(drawDots);
 }
