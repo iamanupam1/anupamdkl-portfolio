@@ -1,4 +1,10 @@
-# Building an Autonomous AI-Powered Support Agent with FastAPI, Streamlit, PostgreSQL, and Groq
+---
+title: "Building an Autonomous AI-Powered Support Agent with FastAPI, Streamlit, PostgreSQL, and Groq"
+summary: "A practical walkthrough of building an AI-driven e-commerce support agent with FastAPI and Streamlit."
+date: 2026-04-10
+tags: ["AI", "FastAPI", "Streamlit", "PostgreSQL", "Groq"]
+gradient: "linear-gradient(135deg, rgba(200,245,66,0.1), rgba(168,214,32,0.15))"
+---
 
 This project is a modern customer support agent built for e-commerce platforms. It combines conversational AI, structured data access, and a clean web UI so businesses can deliver fast, personalized support across order inquiries, product search, ticket management, and refunds.
 
