@@ -83,23 +83,13 @@ Groq serves as the LLM backend to generate responses, interpret user intent, and
 4. The AI agent in `src/agent.py` constructs a prompt and calls Groq.
 5. The response is returned to the user and optionally stored in memory.
 
-![AI Support Agent Interface](/blog/support-agent.png)
+
 
 ## Sample request and response
 
 ### Example request / response
 
-```bash
-curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"session_id":"demo-session","customer_id":"demo_user","message":"Where is my order #2398 and can I request a refund?"}'
-```
-
-```json
-{
-  "reply": "Order #2398 is on the way and expected to arrive by Tuesday. Your purchase is eligible for a full refund within 14 days. Would you like me to start the refund process?"
-}
-```
-
-![Agent response sample](/blog/support-agent-response.svg)
+![AI Support Agent Interface](/blog/support-agent.png)
 
 ## Running the project locally
 
