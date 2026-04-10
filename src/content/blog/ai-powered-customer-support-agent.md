@@ -83,6 +83,8 @@ Groq serves as the LLM backend to generate responses, interpret user intent, and
 4. The AI agent in `src/agent.py` constructs a prompt and calls Groq.
 5. The response is returned to the user and optionally stored in memory.
 
+![AI Support Agent Interface](/blog/support-agent.png)
+
 ## Sample request and response
 
 ### Example request / response
