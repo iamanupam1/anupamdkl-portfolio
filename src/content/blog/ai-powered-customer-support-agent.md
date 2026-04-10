@@ -83,6 +83,89 @@ Groq serves as the LLM backend to generate responses, interpret user intent, and
 4. The AI agent in `src/agent.py` constructs a prompt and calls Groq.
 5. The response is returned to the user and optionally stored in memory.
 
+## Code samples and request/response
+
+### FastAPI chat endpoint
+
+```python
+from fastapi import APIRouter
+from pydantic import BaseModel
+
+router = APIRouter()
+
+class ChatRequest(BaseModel):
+    session_id: str
+    user_id: str
+    message: str
+
+class ChatResponse(BaseModel):
+    message: str
+    intent: str
+    metadata: dict
+
+@router.post("/api/chat", response_model=ChatResponse)
+async def chat(req: ChatRequest):
+    conversation = await load_session(req.session_id, req.user_id)
+    response = await agent.respond(req.message, conversation)
+    return ChatResponse(
+        message=response.text,
+        intent=response.intent,
+        metadata=response.metadata,
+    )
+```
+
+### Streamlit UI example
+
+```python
+import streamlit as st
+import requests
+
+st.set_page_config(page_title="AI Support Agent")
+st.title("AI Customer Support")
+user_message = st.text_input("Ask about your order, refund, or product details")
+
+if st.button("Send") and user_message:
+    payload = {
+        "session_id": st.session_state.get("session_id", "demo-session"),
+        "user_id": "demo_user",
+        "message": user_message,
+    }
+    response = requests.post("http://localhost:8000/api/chat", json=payload)
+    result = response.json()
+    st.markdown(f"**Agent:** {result['message']}")
+    st.write("**Detected intent:**", result["intent"])
+```
+
+![Streamlit support agent UI](/blog/support-agent-ui.svg)
+
+### Example request / response
+
+```http
+POST /api/chat HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+  "session_id": "demo-session",
+  "user_id": "demo_user",
+  "message": "Where is my order #2398 and can I request a refund?"
+}
+```
+
+```json
+{
+  "message": "Order #2398 is on the way and expected to arrive by Tuesday. Your purchase is eligible for a full refund within 14 days. Would you like me to start the refund process?",
+  "intent": "order_status_and_refund",
+  "metadata": {
+    "order_id": "2398",
+    "refund_eligible": true,
+    "estimated_delivery": "2026-04-14"
+  }
+}
+```
+
+![Agent response sample](/blog/support-agent-response.svg)
+
 ## Running the project locally
 
 ### Prerequisites
