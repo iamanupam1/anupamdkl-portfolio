@@ -88,13 +88,7 @@ Groq serves as the LLM backend to generate responses, interpret user intent, and
 ### Example request / response
 
 ```bash
-curl -X POST http://localhost:8000/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "session_id": "demo-session",
-    "customer_id": "demo_user",
-    "message": "Where is my order #2398 and can I request a refund?"
-  }'
+curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"session_id":"demo-session","customer_id":"demo_user","message":"Where is my order #2398 and can I request a refund?"}'
 ```
 
 ```json
