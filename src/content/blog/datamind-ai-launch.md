@@ -6,8 +6,6 @@ tags: ["AI", "Database", "Next.js", "NLP"]
 gradient: "linear-gradient(135deg, rgba(168,214,32,0.12), rgba(200,245,66,0.08))"
 ---
 
-Today, we're excited to announce the launch of **DataMind AI**, a platform designed to democratize database access for developers, analysts, and business users alike.
-
 ## The Problem
 
 Querying databases requires deep SQL or NoSQL knowledge. Many teams struggle with complex queries, documentation overhead, and the time it takes to translate business questions into database commands. For non-technical stakeholders, the database often feels like a black box.
@@ -42,10 +40,5 @@ Built with **Next.js** and **React** for a modern, responsive interface. Support
 
 ## Why It Matters
 
-We believe data should be accessible to everyone. Whether you're writing analytics, building reports, or exploring data, DataMind AI removes the barrier between questions and answers.
+I believe data should be accessible to everyone. Whether you're writing analytics, building reports, or exploring data, DataMind AI removes the barrier between questions and answers.
 
-## What's Next
-
-We're actively expanding database support and improving our AI models with millions of real-world queries to ensure accuracy and relevance.
-
-Start exploring at [datamind.ai](https://datamind.ai) and transform how you interact with your data.

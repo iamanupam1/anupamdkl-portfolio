@@ -123,9 +123,3 @@ Groq serves as the LLM backend to generate responses, interpret user intent, and
 - enhance the AI with retrieval-augmented generation
 - add analytics dashboards for support throughput
 - build a dedicated React/Next.js frontend
-
-## Final thoughts
-
-This support agent is a strong example of how modern Python development can bring AI into practical customer service applications. It balances the speed of FastAPI, the simplicity of Streamlit, the reliability of PostgreSQL, and the intelligence of Groq.
-
-If you want, I can also help turn this into a ready-to-publish Medium post with sections, headings, and SEO-friendly hooks.
